@@ -51,6 +51,10 @@ class Plugin {
         return __DIR__ . '/../../../../wp-content/uploads/' . self::plugin_name .  '/cache/';
     }
 
+    public function getPluginFileUrl($relativePath) {
+        return plugins_url($relativePath, $this->pluginFile);
+    }
+
     public function getPluginFilePath ($relativePath) {
         return dirname($this->pluginFile) . DIRECTORY_SEPARATOR . $relativePath;
     }
@@ -67,10 +71,10 @@ class Plugin {
             wp_enqueue_script(self::$jsJwNamespace);
         }
 
-        wp_register_style(self::$cssNamespace, plugins_url('assets/css/frontend.css', $this->pluginFile));
+        wp_register_style(self::$cssNamespace, $this->getPluginFileUrl('assets/css/frontend.css'));
         wp_enqueue_style(self::$cssNamespace);
 
-        wp_register_script(self::$jsNamespace, plugins_url('assets/js/app.js', $this->pluginFile));
+        wp_register_script(self::$jsNamespace, $this->getPluginFileUrl('assets/js/app.js'));
         wp_enqueue_script(self::$jsNamespace);
     }
 

@@ -6,9 +6,6 @@
  * 
  * @since 4.1.3
  */
-
-use WpUxMediaPlayer\Plugin\Plugin;
-
 if ( ! defined( 'ABSPATH' ) ) {  exit;  }    // Exit if accessed directly
 
 if ( ! class_exists( 'sh_sc_audio_player' ) )
@@ -76,42 +73,42 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 		 */
 		public function shortcode_insert_button()
 		{
-			$this->config['self_closing']	=	'no';
+			$this->config['version']		= '1.0';
+			$this->config['self_closing']	= 'no';
 			
 			$this->config['name']			= __( 'SH Audio Player', 'avia_framework' );
 			$this->config['tab']			= __( 'Media Elements', 'avia_framework' );
-			$this->config['icon']			= AviaBuilder::$path['imagesURL'] . "sc-audio-player.png";
+			$this->config['icon']			= AviaBuilder::$path['imagesURL'] . 'sc-audio-player.png';
 			$this->config['order']			= 90;
 			$this->config['target']			= 'avia-target-insert';
 			$this->config['shortcode'] 		= 'sh_player';
-			$this->config['shortcode_nested'] = array( 'sh_playlist_element' );
-			$this->config['tooltip'] 	    = __( 'Add an beautifull audio player element', 'avia_framework' );
-			$this->config['tinyMCE'] 		= array( 'disable' => "true" );
+			$this->config['shortcode_nested'] = array( 'av_playlist_element' );
+			$this->config['tooltip'] 	    = __( 'Add a beautiful audio player element', 'avia_framework' );
+			$this->config['tinyMCE'] 		= array( 'disable' => 'true' );
 			$this->config['drag-level'] 	= 3;
 			$this->config['preview']		= false;
 			$this->config['disabling_allowed'] = true;
 			$this->config['disabled']		= array(
-									'condition'	=> ( avia_get_option('disable_mediaelement') == 'disable_mediaelement' ), 
+									'condition'	=> ( avia_get_option( 'disable_mediaelement' ) == 'disable_mediaelement' ), 
 									'text'		=> __( 'This element is disabled in your theme options. You can enable it in Enfold &raquo; Performance', 'avia_framework' )
 								);
 			$this->config['id_name']		= 'id';
 			$this->config['id_show']		= 'yes';				//	we use original code - not $meta										
 
 		}
-		
-		function extra_assets() {
 
-		    global $GLOBALS;
-		    /** @var Plugin $plugin */
-		    $plugin = $GLOBALS['wp-ux-media-player'];
+        function extra_assets() {
 
-			//load css
-			wp_enqueue_style( 'sh-module-audioplayer' , $plugin->getPluginFileUrl('enfold/shortcodes/audio-player/audio-player.css'), array('avia-layout'), false );
-			
-			//load js
-			wp_enqueue_script( 'sh-module-audioplayer' , $plugin->getPluginFileUrl('enfold/shortcodes/audio-player/audio-player.js') , array('avia-shortcodes'), false, true );
+            global $GLOBALS;
+            /** @var Plugin $plugin */
+            $plugin = $GLOBALS['wp-ux-media-player'];
 
-		}
+            //load css
+            wp_enqueue_style( 'sh-module-audioplayer' , $plugin->getPluginFileUrl('enfold/shortcodes/audio-player/audio-player.css'), array('avia-layout'), false );
+
+            //load js
+            wp_enqueue_script( 'sh-module-audioplayer' , $plugin->getPluginFileUrl('enfold/shortcodes/audio-player/audio-player.js') , array('avia-shortcodes'), false, true );
+        }
 		
 		
 		/**
@@ -126,36 +123,128 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 		public function popup_elements()
 		{
 			//if the element is disabled
-			if($this->config['disabled']['condition'] == true)
+			if( true === $this->config['disabled']['condition'] )
 			{
 				$this->elements = array(
 					
-					array(
-							"name" 	=> __("Element disabled",'avia_framework' ),
-							"desc" 	=> $this->config['disabled']['text'].
-							'<br/><br/><a target="_blank" href="'.admin_url('admin.php?page=avia#goto_performance').'">'.__("Enable it here",'avia_framework' )."</a>",
-							"type" 	=> "heading",
-							"description_class" => "av-builder-note av-error",
-							)
+					array(	
+								'type'			=> 'template',
+								'template_id'	=> 'element_disabled',
+								'args'			=> array(
+														'desc'	=> $this->config['disabled']['text']
+													)
+							),
 						);
-				
+
 				return;
 			}
+
 			
 			
 			$this->elements = array(
 
+				array(
+						'type' 	=> 'tab_container', 
+						'nodescription' => true
+					),
+				
+				array(
+						'type' 	=> 'tab',
+						'name'  => __( 'Content', 'avia_framework' ),
+						'nodescription' => true
+					),
+					
 					array(
-						"type"			=> "tab_container", 
+							'type'			=> 'template',
+							'template_id'	=> 'toggle_container',
+							'templates_include'	=> array(
+													$this->popup_key( 'content_playlist' ),
+													$this->popup_key( 'content_player' )
+												),
+							'nodescription' => true
+						),
+				
+				array(
+						'type' 	=> 'tab_close',
+						'nodescription' => true
+					),
+						
+				
+				array(
+						'type' 	=> 'tab',
+						'name'  => __( 'Styling', 'avia_framework' ),
+						'nodescription' => true
+					),
+				
+					array(
+							'type'			=> 'template',
+							'template_id'	=> 'toggle_container',
+							'templates_include'	=> array(
+													$this->popup_key( 'styling_player' ),
+													$this->popup_key( 'styling_colors' )
+												),
+							'nodescription' => true
+						),
+				
+				array(
+						'type' 	=> 'tab_close',
+						'nodescription' => true
+					),
+				
+				array(
+						'type' 	=> 'tab',
+						'name'  => __( 'Advanced', 'avia_framework' ),
+						'nodescription' => true
+					),
+				
+					array(
+							'type' 	=> 'toggle_container',
+							'nodescription' => true
+						),
+				
+						array(	
+								'type'			=> 'template',
+								'template_id'	=> 'screen_options_toggle'
+							),
+				
+						array(	
+								'type'			=> 'template',
+								'template_id'	=> 'developer_options_toggle',
+								'args'			=> array( 'sc' => $this )
+							),
+				
+					array(
+							'type' 	=> 'toggle_container_close',
+							'nodescription' => true
+						),
+				
+				array(
+						'type' 	=> 'tab_close',
 						'nodescription' => true
 					),
 
-					array(
-						"type"			=> "tab",
-						"name"			=> __( "Playlist" , 'avia_framework' ),
+				array(
+						'type' 	=> 'tab_container_close',
 						'nodescription' => true
-					),
-
+					)
+		
+			);
+		}
+		
+		/**
+		 * Create and register templates for easier maintainance
+		 * 
+		 * @since 4.6.4
+		 */
+		protected function register_dynamic_templates()
+		{
+			
+			/**
+			 * Content Tab
+			 * ===========
+			 */
+			
+			$c = array(
 
                         array(
                             "name"			=> __( "Playlist Title", 'avia_framework' ),
@@ -164,147 +253,101 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
                             "type"			=> "input",
                             "std"			=> ''
                         ),
-
-                        array(
-							"name"			=> __( "Autoplay", 'avia_framework' ),
-							"desc"			=> __( "Choose if the player starts on pageload or has to be started manually", 'avia_framework' ),
-							"id"			=> "autoplay",
-							"type"			=> "select",
-							"std"			=> '',
-							"subtype"		=> array(
-													__( 'Start manually','avia_framework' )		=> 'manual',
-													__( 'Start on pageload','avia_framework' )	=> 'autoplay'
+						
+						array(	
+								'type'				=> 'modal_group', 
+								'id'				=> 'content',
+								'container_class'	=> 'avia-element-fullwidth avia-multi-img',
+								'modal_title'		=> __( 'Edit Form Element', 'avia_framework' ),
+								'modal_open'		=> 'no',
+								'trigger_button'	=> 'avia-builder-audio-edit',
+								'add_label'			=> __( 'Add single audio', 'avia_framework' ),
+								'disable_manual'	=> 'yes',
+								'std'				=> array(),
+								'creator'			=> array(
+															'name'		=> __( 'Create and Edit Audio Playlist', 'avia_framework' ),
+															'desc'		=> __( 'Here you can add new audio files to the playlist, remove files or reorder them.', 'avia_framework' ),
+															'id'		=> 'id',
+															'type'		=> 'audio_player',
+															'state'		=> 'avia_insert_multi_audio',
+															'title'		=> __( 'Add/Edit Audio Files', 'avia_framework' ),
+															'button'	=> __( 'Insert Audio Files', 'avia_framework' ),
+															'std'		=> ''
+														),
+								'subelements'		=> $this->create_modal()
+						),
+				
+						array(	
+							'name'			=> __( 'Autoplay', 'avia_framework' ),
+							'desc'			=> __( 'Choose if the player starts on pageload or has to be started manually', 'avia_framework' ),
+							'id'			=> 'autoplay',
+							'type'			=> 'select',
+							'std'			=> '',
+							'subtype'		=> array(
+													__( 'Start manually', 'avia_framework' )	=> 'manual',
+													__( 'Start on pageload', 'avia_framework' )	=> 'autoplay'
 												)
 						),
 				
 						array(	
-							"name"			=> __( "Loop playlist", 'avia_framework' ),
-							"desc"			=> __( "Choose if you want to stop after playing the list once or if you want to continue from beginning again. <strong>Since WP 5.2 Firefox does not stop when Enfold javascript file merging and compression is enabled. Other browsers work as expected.</strong>", 'avia_framework' ),
-							"id"			=> "loop",
-							"type"			=> "select",
-							"std"			=> '',
-							"subtype"		=> array(
-													__( 'Start from beginning again','avia_framework' )		=> '',
-													__( 'Stop after playing last song','avia_framework' )	=> 'avia-playlist-no-loop'
+							'name'			=> __( 'Loop playlist', 'avia_framework' ),
+							'desc'			=> __( 'Choose if you want to stop after playing the list once or if you want to continue from beginning again. <strong>Since WP 5.2 Firefox does not stop when Enfold javascript file merging and compression is enabled. Other browsers work as expected.</strong>', 'avia_framework' ),
+							'id'			=> 'loop',
+							'type'			=> 'select',
+							'std'			=> '',
+							'subtype'		=> array(
+													__( 'Start from beginning again', 'avia_framework' )	=> '',
+													__( 'Stop after playing last song', 'avia_framework' )	=> 'avia-playlist-no-loop'
 												)
 						),
 				
 						array(	
-							"name"			=> __( "Playlist Order", 'avia_framework' ),
-							"desc"			=> __( "Here you can select how to sort the playlist when rendering to the player on each pageload.", 'avia_framework' ),
-							"id"			=> "playorder",
-							"type"			=> "select",
-							"std"			=> '',
-							"subtype"		=> array(
-													__( 'Use order of playlist as selected','avia_framework' )	=> 'normal',
-													__( 'Shuffle the playlist randomly','avia_framework' )		=> 'shuffle',
-													/*__( 'Reverse the playlist','avia_framework' )				=> 'reverse'*/
+							'name'			=> __( 'Playlist Order', 'avia_framework' ),
+							'desc'			=> __( 'Here you can select how to sort the playlist when rendering to the player on each pageload.', 'avia_framework' ),
+							'id'			=> 'playorder',
+							'type'			=> 'select',
+							'std'			=> '',
+							'subtype'		=> array(
+													__( 'Use order of playlist as selected', 'avia_framework' )	=> 'normal',
+													__( 'Shuffle the playlist randomly', 'avia_framework' )		=> 'shuffle',
+													/*__( 'Reverse the playlist', 'avia_framework' )			=> 'reverse'*/
 												)
-						),
-				
+						)
+						
+				);
+			
+			$template = array(
+							array(	
+								'type'			=> 'template',
+								'template_id'	=> 'toggle',
+								'title'			=> __( 'Playlist', 'avia_framework' ),
+								'content'		=> $c 
+							),
+					);
+			
+			AviaPopupTemplates()->register_dynamic_template( $this->popup_key( 'content_playlist' ), $template );
+			
+			$c = array(
+						
 						array(	
-							"type" 			=> "modal_group", 
-							"id" 			=> "content",
-							'container_class' =>"avia-element-fullwidth avia-multi-img",
-							"modal_title" 	=> __("Edit Form Element", 'avia_framework' ),
-							'modal_open'	=> 'no',
-							'trigger_button' => 'avia-builder-audio-edit',
-							"add_label"		=> __("Add single audio", 'avia_framework' ),
-							'disable_manual'	=>	'yes',
-							"std"			=> array(),
-
-							'creator'		=> array(
-										"name"		=> __( "Create and Edit Audio Playlist", 'avia_framework' ),
-										"desc"		=> __( "Here you can add new audio files to the playlist, remove files or reorder them.", 'avia_framework' ),
-										"id"		=> "id",
-										"type"		=> "audio_player",
-										'state'		=> 'avia_insert_multi_audio',
-										"title"		=> __( "Add/Edit Audio Files", 'avia_framework' ),
-										"button"	=> __( "Insert Audio Files", 'avia_framework' ),
-										"std"		=> ""
-											),
-								
-							'subelements' 	=> array(
-									
-										array(
-											"type" 	=> "tab_container", 'nodescription' => true
-										),
-
-										array(
-											"type"		=> "tab",
-											"name"		=> __( "Content Audio" , 'avia_framework' ),
-											'nodescription' => true
-										),
-									
-										//	Dummy element only to avoid notices
-										array(	
-											"name"		=> __("Which type of media is this?",'avia_framework' ),
-											"id"		=> "audio_type",
-											"type"		=> "select",
-											"std"		=> "audio",
-											"subtype"	=> array(   
-																__( 'Audio File', 'avia_framework' )	=> 'audio',
-																__( 'Video File', 'avia_framework' )	=> 'video',
-															)
-										),
-									
-										array(
-											"type"			=> "close_div",
-											'nodescription' => true
-										),	
-								
-								
-										array(
-											"type"			=> "close_div",
-											'nodescription' => true
-										),	
-
-									),		//	subelements
-															
-						),			//	modal_group
-				
-					array(
-						"type"			=> "close_div",
-						'nodescription' => true
-					),	
-
-					array(
-						"type"			=> "tab",
-						"name"			=> __( "Layout" , 'avia_framework' ),
-						'nodescription' => true
-					),
-				
-						array(	
-							"name"			=> __( "Player styling", 'avia_framework' ),
-							"desc"			=> __( "Here you can select the general appearance of the player", 'avia_framework' ),
-							"id"			=> "player_style",
-							"type"			=> "select",
-							"std"			=> '',
-							"subtype"		=> array(
-													__( 'Classic (boxed)', 'avia_framework' )	=> 'classic',
-													__( 'Minimal (borderless, no background)', 'avia_framework' )	=> 'minimal',
-												)
-							),	
-				
-						array(	
-							"name"			=> __( "Choose a Cover Image", 'avia_framework' ),
-							"desc"			=> __("Either upload a new or choose an existing image from your media library", 'avia_framework' ),
-							"id"			=> "cover_id",
-							"fetch"			=> "id",
-							"type"			=> "image",
-							"title"			=> __("Choose a Cover Image", 'avia_framework' ),
-							"button"		=> __("Choose a Cover Image", 'avia_framework' ),
-							"std"			=> ''
+							'name'			=> __( 'Choose a Cover Image', 'avia_framework' ),
+							'desc'			=> __( 'Either upload a new or choose an existing image from your media library', 'avia_framework' ),
+							'id'			=> 'cover_id',
+							'fetch'			=> 'id',
+							'type'			=> 'image',
+							'title'			=> __( 'Choose a Cover Image', 'avia_framework' ),
+							'button'		=> __( 'Choose a Cover Image', 'avia_framework' ),
+							'std'			=> ''
 						),
 				
 /*
 						array(	
-							"name"			=> __( "Cover Image Location", 'avia_framework' ),
-							"desc"			=> __( "Here you can select where to show the cover for larger screens. On mobile devices the image will be centered above the player by default.", 'avia_framework' ),
-							"id"			=> "cover_location",
-							"type"			=> "select",
-							"std"			=> 'top left',
-							"subtype"		=> array(
+							'name'			=> __( 'Cover Image Location', 'avia_framework' ),
+							'desc'			=> __( 'Here you can select where to show the cover for larger screens. On mobile devices the image will be centered above the player by default.', 'avia_framework' ),
+							'id'			=> 'cover_location',
+							'type'			=> 'select',
+							'std'			=> 'top left',
+							'subtype'		=> array(
 													__( 'Hide the cover image', 'avia_framework' )				=> 'hide',
 													__( 'Show above player left aligned', 'avia_framework' )	=> 'top left',
 													__( 'Show above player centered', 'avia_framework' )		=> 'top center',
@@ -315,25 +358,25 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 						),	
 						
 						array(	
-							"name"			=> __( "Cover Image Size", 'avia_framework' ),
-							"desc"			=> __( "Choose image size for your cover.", 'avia_framework' ),
-							"id"			=> "cover_size",
-							"type"			=> "select",
-							"std"			=> "thumbnail",
-							"required"		=> array( 'cover_location', 'not', 'hide' ),
-							"subtype"		=>  AviaHelper::get_registered_image_sizes( array(), false, true )		
+							'name'			=> __( 'Cover Image Size', 'avia_framework' ),
+							'desc'			=> __( 'Choose image size for your cover.', 'avia_framework' ),
+							'id'			=> 'cover_size',
+							'type'			=> 'select',
+							'std'			=> 'thumbnail',
+							'required'		=> array( 'cover_location', 'not', 'hide' ),
+							'subtype'		=>  AviaHelper::get_registered_image_sizes( array(), false, true )		
 						),
 
 				
 						
 						
 						array(	
-							"name"			=> __( "Playlist styling", 'avia_framework' ),
-							"desc"			=> __( "Here you can select the styling of the playlist", 'avia_framework' ),
-							"id"			=> "playlist_style",
-							"type"			=> "select",
-							"std"			=> 'light',
-							"subtype"		=> array(
+							'name'			=> __( 'Playlist styling', 'avia_framework' ),
+							'desc'			=> __( 'Here you can select the styling of the playlist', 'avia_framework' ),
+							'id'			=> 'playlist_style',
+							'type'			=> 'select',
+							'std'			=> 'light',
+							'subtype'		=> array(
 													__( 'Light', 'avia_framework' )	=> 'light',
 													__( 'Dark', 'avia_framework' )	=> 'dark'
 												)
@@ -342,151 +385,235 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 						*/
 				
 						array(	
-							"name"			=> __( "Tracklist", 'avia_framework' ),
-							"desc"			=> __( "Here you can select to show or hide the tracklist", 'avia_framework' ),
-							"id"			=> "tracklist",
-							"type"			=> "select",
-							"std"			=> 'show',
-							"subtype"		=> array(
+							'name'			=> __( 'Tracklist', 'avia_framework' ),
+							'desc'			=> __( 'Here you can select to show or hide the tracklist', 'avia_framework' ),
+							'id'			=> 'tracklist',
+							'type'			=> 'select',
+							'std'			=> 'show',
+							'subtype'		=> array(
 													__( 'Show tracklist', 'avia_framework' )	=> 'show',
 													__( 'Hide tracklist', 'avia_framework' )	=> 'hide'
 												)
 						),	
 				
 						array(	
-							"name"			=> __( "Tracknumbers", 'avia_framework' ),
-							"desc"			=> __( "Here you can select to show or hide the tracknumbers next to entries in the playlist", 'avia_framework' ),
-							"id"			=> "tracknumbers",
-							"type"			=> "select",
-							"std"			=> 'show',
-							"required"		=> array( 'tracklist', 'equals', 'show' ),
-							"subtype"		=> array(
+							'name'			=> __( 'Tracknumbers', 'avia_framework' ),
+							'desc'			=> __( 'Here you can select to show or hide the tracknumbers next to entries in the playlist', 'avia_framework' ),
+							'id'			=> 'tracknumbers',
+							'type'			=> 'select',
+							'std'			=> 'show',
+							'required'		=> array( 'tracklist', 'equals', 'show' ),
+							'subtype'		=> array(
 													__( 'Show tracknumbers', 'avia_framework' )	=> 'show',
 													__( 'Hide tracknumbers', 'avia_framework' )	=> 'hide'
 												)
 						),	
 				
 						array(	
-							"name"			=> __( "Artists Name", 'avia_framework' ),
-							"desc"			=> __( "Here you can select to show or hide the artists name in the playlist", 'avia_framework' ),
-							"id"			=> "artists",
-							"type"			=> "select",
-							"std"			=> 'show',
-							"required"		=> array( 'tracklist', 'equals', 'show' ),
-							"subtype"		=> array(
+							'name'			=> __( 'Artists Name', 'avia_framework' ),
+							'desc'			=> __( 'Here you can select to show or hide the artists name in the playlist', 'avia_framework' ),
+							'id'			=> 'artists',
+							'type'			=> 'select',
+							'std'			=> 'show',
+							'required'		=> array( 'tracklist', 'equals', 'show' ),
+							'subtype'		=> array(
 													__( 'Show artists name', 'avia_framework' )	=> 'show',
 													__( 'Hide artists name', 'avia_framework' )	=> 'hide'
 												)
 						),	
 				
 						array(	
-							"name"			=> __( "Media Icon/Album Cover", 'avia_framework' ),
-							"desc"			=> __( "Here you can select to show or hide the media icon in the playlist. This icon can be set in the media gallery for each element as the featured image. WP will use a default icon on upload, if none is set.", 'avia_framework' ),
-							"id"			=> "media_icon",
-							"type"			=> "select",
-							"std"			=> 'show',
-							"subtype"		=> array(
+							'name'			=> __( 'Media Icon/Album Cover', 'avia_framework' ),
+							'desc'			=> __( 'Here you can select to show or hide the media icon in the playlist. This icon can be set in the media gallery for each element as the featured image. WP will use a default icon on upload, if none is set.', 'avia_framework' ),
+							'id'			=> 'media_icon',
+							'type'			=> 'select',
+							'std'			=> 'show',
+							'subtype'		=> array(
 													__( 'Show media icon/album cover', 'avia_framework' )		=> 'show',
 													__( 'Hide', 'avia_framework' ) => 'hide'
 												)
-						),	
-				
-					array(
-						"type"			=> "close_div",
-						'nodescription' => true
-					),	
-
-					array(
-						"type"			=> "tab",
-						"name"			=> __( "Colors" , 'avia_framework' ),
-						'nodescription' => true
-					),
-				
+						),
+						
+				);
+			
+			$template = array(
+							array(	
+								'type'			=> 'template',
+								'template_id'	=> 'toggle',
+								'title'			=> __( 'Player', 'avia_framework' ),
+								'content'		=> $c 
+							),
+					);
+			
+			AviaPopupTemplates()->register_dynamic_template( $this->popup_key( 'content_player' ), $template );
+			
+			
+			/**
+			 * Content Tab
+			 * ===========
+			 */
+			
+			$c = array(
 						array(	
-							"name"			=> __( "Font Color", 'avia_framework' ),
-							"desc"			=> __( "Select a font color", 'avia_framework' ),
-							"id"			=> "font_color",
-							"type"			=> "select",
-							"std"			=> "",
-							"subtype"		=> array( 
-													__( "Default Color", 'avia_framework' )	=> '', 
-													__( "Custom Color", 'avia_framework' )	=> 'custom-font-color'
+							'name'			=> __( 'Player styling', 'avia_framework' ),
+							'desc'			=> __( 'Here you can select the general appearance of the player', 'avia_framework' ),
+							'id'			=> 'player_style',
+							'type'			=> 'select',
+							'std'			=> '',
+							'subtype'		=> array(
+													__( 'Classic (boxed)', 'avia_framework' )	=> 'classic',
+													__( 'Minimal (borderless, no background)', 'avia_framework' )	=> 'minimal',
+												)
+							),	
+				
+						
+				);
+			
+			$template = array(
+							array(	
+								'type'			=> 'template',
+								'template_id'	=> 'toggle',
+								'title'			=> __( 'Player', 'avia_framework' ),
+								'content'		=> $c 
+							),
+					);
+			
+			AviaPopupTemplates()->register_dynamic_template( $this->popup_key( 'styling_player' ), $template );
+			
+			
+			$c = array(
+						array(	
+							'name'			=> __( 'Font Color', 'avia_framework' ),
+							'desc'			=> __( 'Select a font color', 'avia_framework' ),
+							'id'			=> 'font_color',
+							'type'			=> 'select',
+							'std'			=> '',
+							'subtype'		=> array( 
+													__( 'Default Color', 'avia_framework' )	=> '', 
+													__( 'Custom Color', 'avia_framework' )	=> 'custom-font-color'
 												)
 						), 
 					
 						array(	
-							"name"			=> __( "Custom Font Color", 'avia_framework' ),
-							"desc"			=> __( "Select a custom font color for your Player here", 'avia_framework' ),
-							"id"			=> "custom_font_color",
-							"type"			=> "colorpicker",
-							"std"			=> "",
-							"rgba"			=> true,
-							"required"		=> array( 'font_color', 'equals', 'custom-font-color' )
+							'name'			=> __( 'Custom Font Color', 'avia_framework' ),
+							'desc'			=> __( 'Select a custom font color for your Player here', 'avia_framework' ),
+							'id'			=> 'custom_font_color',
+							'type'			=> 'colorpicker',
+							'std'			=> '',
+							'rgba'			=> true,
+							'required'		=> array( 'font_color', 'equals', 'custom-font-color' )
 						),
 				
 						array(	
-							"name"			=> __( "Background Color", 'avia_framework' ),
-							"desc"			=> __( "Select a background color", 'avia_framework' ),
-							"id"			=> "background_color",
-							"type"			=> "select",
-							"std"			=> "",
-							"subtype"		=> array( 
-													__( "Default Color", 'avia_framework' )	=> '', 
-													__( "Custom Color", 'avia_framework' )	=> 'custom-background-color'
+							'name'			=> __( 'Background Color', 'avia_framework' ),
+							'desc'			=> __( 'Select a background color', 'avia_framework' ),
+							'id'			=> 'background_color',
+							'type'			=> 'select',
+							'std'			=> '',
+							'subtype'		=> array( 
+													__( 'Default Color', 'avia_framework' )	=> '', 
+													__( 'Custom Color', 'avia_framework' )	=> 'custom-background-color'
 												)
 						), 
 				
 						array(	
-							"name"			=> __( "Custom Background Color", 'avia_framework' ),
-							"desc"			=> __( "Select a custom background color for your Player here", 'avia_framework' ),
-							"id"			=> "custom_background_color",
-							"type"			=> "colorpicker",
-							"std"			=> "",
-							"rgba"			=> true,
-							"required"		=> array( 'background_color', 'equals', 'custom-background-color' )
+							'name'			=> __( 'Custom Background Color', 'avia_framework' ),
+							'desc'			=> __( 'Select a custom background color for your Player here', 'avia_framework' ),
+							'id'			=> 'custom_background_color',
+							'type'			=> 'colorpicker',
+							'std'			=> '',
+							'rgba'			=> true,
+							'required'		=> array( 'background_color', 'equals', 'custom-background-color' )
 						),
 						
 						array(	
-							"name"			=> __( "Border Color", 'avia_framework' ),
-							"desc"			=> __( "Select a border color", 'avia_framework' ),
-							"id"			=> "border_color",
-							"type"			=> "select",
-							"std"			=> "",
-							"subtype"		=> array( 
-													__( "Default Color", 'avia_framework' )	=> '', 
-													__( "Custom Color", 'avia_framework' )	=> 'custom-border-color'
+							'name'			=> __( 'Border Color', 'avia_framework' ),
+							'desc'			=> __( 'Select a border color', 'avia_framework' ),
+							'id'			=> 'border_color',
+							'type'			=> 'select',
+							'std'			=> '',
+							'subtype'		=> array( 
+													__( 'Default Color', 'avia_framework' )	=> '', 
+													__( 'Custom Color', 'avia_framework' )	=> 'custom-border-color'
 												)
 						), 
 				
 						array(	
-							"name"			=> __( "Custom Border Color", 'avia_framework' ),
-							"desc"			=> __( "Select a custom background color for your Player here", 'avia_framework' ),
-							"id"			=> "custom_border_color",
-							"type"			=> "colorpicker",
-							"rgba"			=> true,
-							"std"			=> "",
-							"required"		=> array( 'border_color', 'equals', 'custom-border-color' )
+							'name'			=> __( 'Custom Border Color', 'avia_framework' ),
+							'desc'			=> __( 'Select a custom background color for your Player here', 'avia_framework' ),
+							'id'			=> 'custom_border_color',
+							'type'			=> 'colorpicker',
+							'rgba'			=> true,
+							'std'			=> '',
+							'required'		=> array( 'border_color', 'equals', 'custom-border-color' )
 						),
 				
-					array(
-						"type"			=> "close_div",
+						
+				);
+			
+			$template = array(
+							array(	
+								'type'			=> 'template',
+								'template_id'	=> 'toggle',
+								'title'			=> __( 'Colors', 'avia_framework' ),
+								'content'		=> $c 
+							),
+					);
+			
+			AviaPopupTemplates()->register_dynamic_template( $this->popup_key( 'styling_colors' ), $template );
+			
+			
+		}
+		
+		/**
+		 * Creates the modal popup for a single entry
+		 * 
+		 * @since 4.6.4
+		 * @return array
+		 */
+		protected function create_modal()
+		{
+			$elements = array(
+				
+				array(
+						'type' 	=> 'tab_container', 
 						'nodescription' => true
-					),	
-				
-				
+					),
+						
+				array(
+						'type' 	=> 'tab',
+						'name'  => __( 'Content', 'avia_framework' ),
+						'nodescription' => true
+					),
+					
+					//	Dummy element only to avoid notices
 					array(	
-							'type'			=> 'template',
-							'template_id' 	=> 'screen_options_tab',
+							'name'		=> __('Which type of media is this?', 'avia_framework' ),
+							'id'		=> 'audio_type',
+							'type'		=> 'select',
+							'std'		=> 'audio',
+							'subtype'	=> array(   
+												__( 'Audio File', 'avia_framework' )	=> 'audio',
+												__( 'Video File', 'avia_framework' )	=> 'video',
+											)
 						),
-
-								
-					array(
-						"type"			=> "close_div",
+				
+				array(
+						'type' 	=> 'tab_close',
 						'nodescription' => true
-					),	
+					),
+				
+				array(
+						'type' 	=> 'tab_container_close',
+						'nodescription' => true
+					)
+				
 				
 				);
+			
+			return $elements;
 		}
+		
 		
 		/**
 		 * Editor Element - this function defines the visual appearance of an element on the AviaBuilder Canvas
@@ -503,7 +630,7 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 			$element = $this->get_popup_element_by_id( 'autoplay' );
 			
 			/**
-			 * Element has been disabled with option "Disable self hosted video and audio features"
+			 * Element has been disabled with option 'Disable self hosted video and audio features'
 			 */
 			if( false === $element )
 			{
@@ -527,8 +654,9 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 			$selected = empty( $params['args']['autoplay'] ) ? 'manual' : $params['args']['autoplay'];
 			$template = str_replace('{{autoplay}}', $selected, $update_template );
 												
-			$params['innerHtml'] = "<img src='".$this->config['icon'] . "' title='".$this->config['name'] . "' />";
-			$params['innerHtml'].= "<div class='av-player'>" . $this->config['name'] . ' -  <span ' . $update . '">' . $template . "</span></div>";
+			$params['innerHtml'] = "<img src='{$this->config['icon']}' title='{$this->config['name']}' />";
+			$params['innerHtml'].= "<div class='av-player'>{$this->config['name']} -  <span {$update}>{$template}</span></div>";
+			
 			return $params;
 		}
 		
@@ -543,14 +671,14 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 		public function editor_sub_element( $params )
 		{	
 
-			$img_template 		= $this->update_template( "img_fakeArg", "{{img_fakeArg}}" );
-			$title				= $this->update_template( "title_info", "{{title_info}}" );
-			$artist				= $this->update_template( "artist", "{{artist}}" );
-			$album				= $this->update_template( "album", "{{album}}" );
-			$description		= $this->update_template( "description", "{{description}}" );
-			$filename 			= $this->update_template( "filename", "{{filename}}" );
-			$id					= $this->update_template( "id", "{{id}}" );
-			$filelength			= $this->update_template( "filelength", "{{filelength}}" );
+			$img_template 		= $this->update_template( 'img_fakeArg', '{{img_fakeArg}}' );
+			$title				= $this->update_template( 'title_info', '{{title_info}}' );
+			$artist				= $this->update_template( 'artist', '{{artist}}' );
+			$album				= $this->update_template( 'album', '{{album}}' );
+			$description		= $this->update_template( 'description', '{{description}}' );
+			$filename 			= $this->update_template( 'filename', '{{filename}}' );
+			$id					= $this->update_template( 'id', '{{id}}' );
+			$filelength			= $this->update_template( 'filelength', '{{filelength}}' );
 			
 			$title_info		= isset( $params['args']['title'] ) ? $params['args']['title'] : '';
 			$thumbnail		= isset( $params['args']['icon'] ) ? '<img src="' . $params['args']['icon'] .  '" title="' . esc_attr(  $title_info ) . '" alt="" />' : "";
@@ -601,17 +729,17 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 
 			$params['innerHtml']  = '';
 			$params['innerHtml'] .= "<div class='avia_title_container'>";
-			$params['innerHtml'] .=	"	<div " . $this->class_by_arguments( 'audio_type' ,$params['args'] ) . ">";
-			$params['innerHtml'] .= "		<span class='avia_audiolist_image' {$img_template} >{$thumbnail}</span>";
-			$params['innerHtml'] .= "		<div class='avia_audiolist_content'>";
-			$params['innerHtml'] .= "			<h4 class='avia_title_container_inner'>" . $main . "</h4>";
-			$params['innerHtml'] .= "			<p class='avia_content_album' {$album}>" . stripslashes( $album_info ) . "</p>";
-			$params['innerHtml'] .= "			<p class='avia_content_description' {$description}>" . stripslashes( $desc_info ) . "</p>";
-			$params['innerHtml'] .= "			<small class='avia_audio_url' {$filename}>" . stripslashes( $file_info ) . "</small>";
-			$params['innerHtml'] .= "		</div>";
-			$params['innerHtml'] .= "		<div class='hidden-attachment-id' style='display: none;' {$id}>" . $id_info . '</div>';
-			$params['innerHtml'] .= "	</div>";
-			$params['innerHtml'] .= "</div>";
+			$params['innerHtml'] .=		'<div ' . $this->class_by_arguments( 'audio_type' ,$params['args'] ) . '>';
+			$params['innerHtml'] .=			"<span class='avia_audiolist_image' {$img_template} >{$thumbnail}</span>";
+			$params['innerHtml'] .=			"<div class='avia_audiolist_content'>";
+			$params['innerHtml'] .=				"<h4 class='avia_title_container_inner'>{$main}</h4>";
+			$params['innerHtml'] .=				"<p class='avia_content_album' {$album}>" . stripslashes( $album_info ) . "</p>";
+			$params['innerHtml'] .=				"<p class='avia_content_description' {$description}>" . stripslashes( $desc_info ) . "</p>";
+			$params['innerHtml'] .=				"<small class='avia_audio_url' {$filename}>" . stripslashes( $file_info ) . "</small>";
+			$params['innerHtml'] .=			'</div>';
+			$params['innerHtml'] .=			"<div class='hidden-attachment-id' style='display: none;' {$id}>{$id_info}</div>";
+			$params['innerHtml'] .=		'</div>';
+			$params['innerHtml'] .= '</div>';
 
 			return $params;
 		}
@@ -625,7 +753,7 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 		 * @param string $shortcodename the shortcode found, when == callback name
 		 * @return string $output returns the modified html string 
 		 */
-		public function shortcode_handler( $atts, $content = "", $shortcodename = "", $meta = "" )
+		public function shortcode_handler( $atts, $content = '', $shortcodename = '', $meta = '' )
 		{
 			extract( AviaHelper::av_mobile_sizes( $atts ) ); //return $av_font_classes, $av_title_font_classes and $av_display_classes 
 			
@@ -657,12 +785,12 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 							), $atts, $this->config['shortcode'] );
 		
 			//replace some values that are removed for simplicity with defaults. can be later changed if user request those features
-			$this->atts['cover_location'] = "hide";
-			$this->atts['playlist_style'] = "light";
+			$this->atts['cover_location'] = 'hide';
+			$this->atts['playlist_style'] = 'light';
 			
-			if( $this->atts['media_icon'] == "cover") 
+			if( $this->atts['media_icon'] == 'cover') 
 			{
-				$this->atts['media_icon'] = "show";
+				$this->atts['media_icon'] = 'show';
 			}
 		
 			/**
@@ -670,10 +798,10 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 			 */
 			if( empty( $this->atts['id'] ) )
 			{
-				$this->atts['id'] = $this->config['shortcode'] . '-' . avia_sc_audio_player::$instance;
+				$this->atts['id'] = $this->config['shortcode'] . '-' . sh_sc_audio_player::$instance;
 			}
 			
-			avia_sc_audio_player::$instance++;
+			sh_sc_audio_player::$instance++;
 			
 			if( empty( $this->atts['player_style'] ) )
 			{
@@ -747,7 +875,7 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 				$outer_cls[] = 'av-player-hide-playlist';
 			}
 			
-			if( 1 == avia_sc_audio_player::$instance )
+			if( 1 == sh_sc_audio_player::$instance )
 			{
 				$outer_cls[] = 'first';
 			}
@@ -786,18 +914,18 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 				//generate thumb width based on columns
 				$this->extra_style .= "<style type='text/css'>";
 				$this->extra_style .= "#top #wrap_all #{$id} .wp-playlist-item {border-color:{$custom_border_color};}";
-				$this->extra_style .= "</style>";
+				$this->extra_style .= '</style>';
 				
 				if(!empty($this->extra_style))
 				{
 					if(!empty($atts['ajax_request']) || !empty($_POST['avia_request']))
 					{
 						$output .= $this->extra_style;
-						$this->extra_style = "";
+						$this->extra_style = '';
 					}
 					else
 					{
-						avia_sc_audio_player::$non_ajax_style .= $this->extra_style;
+						sh_sc_audio_player::$non_ajax_style .= $this->extra_style;
 						if( false === has_action( 'wp_footer', array( $this, 'print_extra_style' ) ) )
 						{
 							add_action( 'wp_footer', array( $this, 'print_extra_style' ) );
@@ -909,7 +1037,7 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 			}
 			
 			$image = wp_get_attachment_image_src( $new_id, 'thumbnail', false );
-			return $image[0];
+			return is_array( $image ) ? $image[0] : '';
 		}
 		
 		/**
@@ -917,7 +1045,7 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 		 */
 		public function print_extra_style()
 		{
-			echo avia_sc_audio_player::$non_ajax_style;
+			echo sh_sc_audio_player::$non_ajax_style;
 		}
 
 	}		//	end class definition

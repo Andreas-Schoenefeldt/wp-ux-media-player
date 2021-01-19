@@ -109,7 +109,7 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 			wp_enqueue_style( 'sh-module-audioplayer' , $plugin->getPluginFileUrl('enfold/shortcodes/audio-player/audio-player.css'), array('avia-layout'), false );
 			
 			//load js
-			wp_enqueue_script( 'sh-module-audioplayer' , $plugin->getPluginFileUrl('enfold/shortcodes/audio-player/audio-player.js' , array('avia-shortcodes'), false, true );
+			wp_enqueue_script( 'sh-module-audioplayer' , $plugin->getPluginFileUrl('enfold/shortcodes/audio-player/audio-player.js') , array('avia-shortcodes'), false, true );
 
 		}
 		

@@ -1,13 +1,13 @@
 <?php
 /*
-Plugin Name: JW Player
-Plugin URI: https://github.com/DWBN/wp-jw-player
-Description: A simple plugin, which allows to include a hosted jw player powered responsive video player.
-Version: 1.0.1
+Plugin Name: UX Media Player
+Plugin URI: https://github.com/Andreas-Schoenefeldt/wp-ux-media-player
+Description: Improves the standard wordpress media player to have a better skin and usability.
+Version: 1.0.0
 Author: Andreas Schönefeldt
 Author URI: https://github.com/Andreas-Schoenefeldt
 Contributors: Andreas Schönefeldt
-Text Domain: dwbn-wp-jw-player
+Text Domain: wp-ux-media-player
 Domain Path: /languages
 */
 

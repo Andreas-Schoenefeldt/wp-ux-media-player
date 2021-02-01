@@ -1,10 +1,31 @@
-.av-player.av-player-container .wp-playlist {
-  margin: 0; }
+.sh-player-cover-container {
+  background: #666;
+  color: #fff; }
 
-.av-player.av-player-container .av-player-cover-container .av-player-cover img {
-  display: block;
-  max-width: 100%;
-  max-height: 100%; }
+.sh-title-container {
+  padding: 0 15px; }
+  .sh-title-container .sh-title {
+    font: inherit;
+    font-weight: bold;
+    color: inherit;
+    display: block;
+    margin: 0;
+    padding: 15px 0 0;
+    font-size: 1.2em; }
+  .sh-title-container .sh-title-tracks {
+    display: block;
+    padding-bottom: 7.5px; }
+
+.mejs-offscreen {
+  display: none; }
+
+.sh-player-player-container .wp-playlist-current-item {
+  display: none; }
+
+.sh-player-player-container .mejs-container.mejs-audio {
+  min-width: auto !important;
+  width: 100% !important;
+  border-radius: 0; }
 
 .avia-playlist-hide-cover .wp-playlist-current-item {
   height: auto; }
@@ -39,5 +60,5 @@
 #top .avia-playerstyle-minimal.avia-playlist-custom-background-color .wp-playlist {
   padding: 10px; }
 
-#top .av-player-container.av-player-hide-playlist .wp-playlist-tracks {
+#top .sh-player-container.sh-player-hide-playlist .wp-playlist-tracks {
   display: none; }

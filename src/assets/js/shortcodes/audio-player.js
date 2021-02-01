@@ -12,7 +12,7 @@
 
         monitorStart = function( container )
         {
-            var play_pause	= container.find('.av-player-player-container .mejs-playpause-button');
+            var play_pause	= container.find('.sh-player-player-container .mejs-playpause-button');
 
             if( play_pause.length == 0 )
             {

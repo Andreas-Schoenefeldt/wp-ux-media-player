@@ -761,6 +761,7 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 			$this->atts = shortcode_atts( array(
 									'handle'			=> $shortcodename,
 									'id'				=> '',
+									'title'             => '',
 									'autoplay'			=> 'manual',
 									'loop'				=> '',
 									'playorder'			=> 'normal',
@@ -864,15 +865,15 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 			$output  = '';
 			
 			$outer_cls = array( 
-								'av-player',
-								'av-player-container',
+								'sh-player',
+								'sh-player-container',
 								$av_display_classes,
 								$meta['el_class']
 							);
 			
 			if( 'hide' == $tracklist )
 			{
-				$outer_cls[] = 'av-player-hide-playlist';
+				$outer_cls[] = 'sh-player-hide-playlist';
 			}
 			
 			if( 1 == sh_sc_audio_player::$instance )
@@ -958,14 +959,21 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 			
 			$output .= '<div id="' . $id . '" class="' . implode( ' ', $outer_cls ) . '" ' . $outer_styles . '>';
 			
-			if( ! empty( $cover ) )
-			{
-				$output .=	'<div class="av-player-cover-container">';
-				$output .=		'<div class="av-player-cover">' . $cover . '</div>';
+			if( !empty($cover) || !empty($title) ) {
+				$output .=	'<div class="sh-player-cover-container">';
+				if (!empty($cover)) {
+                    $output .= '<div class="sh-player-cover">' . $cover . '</div>';
+                }
+				if (!empty($title)) {
+                    $output .= '<div class="sh-title-container">';
+                        $output .= '<h3 class="sh-title">' . $title . '</h3>';
+                        $output .= '<span class="sh-title-tracks">' . count($ids) . ' Audio Files</span>';
+                    $output .= '</div>';
+                }
 				$output .=	'</div>';
 			}
 			
-			$output .=		'<div class="av-player-player-container">';
+			$output .=		'<div class="sh-player-player-container">';
 			$output .=			$player;
 			$output .=		'</div>';
 			

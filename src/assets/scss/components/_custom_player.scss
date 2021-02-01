@@ -130,24 +130,66 @@
     }
   }
 
-  &__download {
-    border: none;
+  &__buttons {
+    white-space: nowrap;
+  }
+
+  &__icon-wrap {
+
     display: inline-block;
-    margin: 0;
+    margin: 0 0 0 7px;
+    position: relative;
+
+    &:before {
+      content: '';
+      opacity: 0;
+      transition: opacity .2s ease;
+    }
+
+    &:hover {
+      &:before {
+        content: attr(data-tooltip);
+        display: inline-block;
+        background: $white;
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+        padding: 3px 5px;
+        border-radius: 4px;
+        position: absolute;
+        top: -2px;
+        right: 29px;
+        font-size: 12px;
+        line-height: 15px;
+        z-index: 5;
+        color: $gray-1;
+        opacity: 1;
+      }
+    }
+  }
+
+  &__icon {
+    border: none;
     padding: 0;
     cursor: pointer;
     font-size: 0;
     color: transparent;
     width: 24px;
     height: 26px;
-    background: url('download.svg') center center no-repeat;
     background-size: contain;
     opacity: 1;
     transition: opacity .2s ease;
+    margin: 0;
 
     &:hover {
       opacity: 0.55;
     }
+  }
+
+  &__download {
+    background: url('download.svg') center center no-repeat;
+  }
+
+  &__share {
+    background: url('mail.svg') center center no-repeat;
   }
 
 }

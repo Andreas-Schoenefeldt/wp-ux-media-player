@@ -21,6 +21,7 @@ var executeOnInitialized = function (player, callback) {
         var moreText = more.text();
         var lessText = more.data('view_less');
         var downloadText = el.data('download_text');
+        var shareText = el.data('share_text');
         var itemCount = el.data('item_count');
 
         more.click(function (e) {
@@ -42,8 +43,11 @@ var executeOnInitialized = function (player, callback) {
         executeOnInitialized(el, function () {
             el.find('.wp-playlist-item').each(function () {
                 var item = $(this);
-                var url = item.find('a').attr('href');
-                var btn = $('<button type="button" class="sh-player__download" title="' + downloadText + '">download</button>');
+                var labelEl = item.find('a');
+                var url = labelEl.attr('href');
+                var buttons = $('<div class="sh-player__buttons"></div>');
+                var btn = $('<span class="sh-player__icon-wrap" data-tooltip="' + downloadText + '"><button type="button" class="sh-player__icon sh-player__download">download</button></span>');
+                var btn2 = $('<span class="sh-player__icon-wrap" data-tooltip="' + shareText + '"><button type="button" class="sh-player__icon sh-player__share">download</button></span>');
 
                 btn.click(function (e) {
                     e.preventDefault();
@@ -57,7 +61,19 @@ var executeOnInitialized = function (player, callback) {
                     anchor.click();
                 });
 
-                item.append(btn);
+                btn2.click(function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var anchor = document.createElement('a');
+                    anchor.href = 'mailto:?subject=' + labelEl.text() +  '&body=' + url;
+                    anchor.click();
+                });
+
+                buttons.append(btn2);
+                buttons.append(btn);
+
+                item.append(buttons);
             });
         });
 

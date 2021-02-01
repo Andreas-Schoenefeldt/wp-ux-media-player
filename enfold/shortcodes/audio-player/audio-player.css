@@ -816,22 +816,49 @@ div .mejs-time-total {
     top: -1px; }
     .sh-player__view-more:hover {
       background: #08adff; }
-  .sh-player__download {
-    border: none;
+  .sh-player__buttons {
+    white-space: nowrap; }
+  .sh-player__icon-wrap {
     display: inline-block;
-    margin: 0;
+    margin: 0 0 0 7px;
+    position: relative; }
+    .sh-player__icon-wrap:before {
+      content: '';
+      opacity: 0;
+      transition: opacity .2s ease; }
+    .sh-player__icon-wrap:hover:before {
+      content: attr(data-tooltip);
+      display: inline-block;
+      background: #fff;
+      box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+      padding: 3px 5px;
+      border-radius: 4px;
+      position: absolute;
+      top: -2px;
+      right: 29px;
+      font-size: 12px;
+      line-height: 15px;
+      z-index: 5;
+      color: #313131;
+      opacity: 1; }
+  .sh-player__icon {
+    border: none;
     padding: 0;
     cursor: pointer;
     font-size: 0;
     color: transparent;
     width: 24px;
     height: 26px;
-    background: url("download.svg") center center no-repeat;
     background-size: contain;
     opacity: 1;
-    transition: opacity .2s ease; }
-    .sh-player__download:hover {
+    transition: opacity .2s ease;
+    margin: 0; }
+    .sh-player__icon:hover {
       opacity: 0.55; }
+  .sh-player__download {
+    background: url("download.svg") center center no-repeat; }
+  .sh-player__share {
+    background: url("mail.svg") center center no-repeat; }
 
 .avia-playlist-hide-cover .wp-playlist-current-item {
   height: auto; }

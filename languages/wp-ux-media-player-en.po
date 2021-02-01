@@ -12,6 +12,9 @@ msgstr "Audio Files"
 msgid "label.download-file"
 msgstr "Download"
 
+msgid "label.share-file"
+msgstr "Share"
+
 msgid "label.view-less"
 msgstr "View Less"
 

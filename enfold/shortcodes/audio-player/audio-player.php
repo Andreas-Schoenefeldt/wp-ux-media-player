@@ -959,7 +959,7 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 
 			$outer_cls[] = 'js-sh-widget';
 			
-			$output .= '<div id="' . $id . '" class="' . implode( ' ', $outer_cls ) . '" ' . $outer_styles . ' data-widgets="sh-ux-media-player" data-download_text="' . Plugin::get_translation('label.download-file') . '" data-item_count="' . count($ids) . '">';
+			$output .= '<div id="' . $id . '" class="' . implode( ' ', $outer_cls ) . '" ' . $outer_styles . ' data-widgets="sh-ux-media-player" data-share_text="' . Plugin::get_translation('label.share-file') . '" data-download_text="' . Plugin::get_translation('label.download-file') . '" data-item_count="' . count($ids) . '">';
 			
 			if( !empty($cover) || !empty($title) ) {
 				$output .=	'<div class="sh-player-cover-container">';

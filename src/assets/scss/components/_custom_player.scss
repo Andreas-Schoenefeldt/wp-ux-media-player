@@ -30,14 +30,17 @@
 
   &-player-container {
 
-    border: 1px solid $playlist-border-color;
-    border-top: none;
-    border-bottom: none;
+    border-left: 1px solid $playlist-border-color;
+    border-right: 1px solid $playlist-border-color;
+    border-top: none!important;
+    border-bottom: none!important;
     min-height: $player-height + (2 * $playlist-item-height);
 
     audio, .mejs-mediaelement, .mejs-volume-button, .mejs-horizontal-volume-slider {
       display: none!important;
     }
+
+    .wp-playlist { border: none; }
 
     .mejs-container {
       background: $player-bg-color;
@@ -58,6 +61,7 @@
     }
 
     .wp-playlist-tracks {
+      margin: 0;
       padding: 0 $content-spacing-side;
       max-height: 2*$playlist-item-height;
       min-height: 2*$playlist-item-height;

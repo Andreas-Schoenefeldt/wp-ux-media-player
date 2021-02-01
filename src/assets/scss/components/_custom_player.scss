@@ -46,6 +46,11 @@
 
     .wp-playlist { border: none; }
 
+    .mejs-time {
+      font-size: $standard-fontsize;
+      font-weight: 400;
+    }
+
     .mejs-container {
       background: $player-bg-color;
 
@@ -89,6 +94,24 @@
         height: $playlist-item-height;
         line-height: $playlist-item-content-height;
         font-size: $standard-fontsize;
+
+        .wp-playlist-caption {
+          white-space: nowrap;
+          width: calc(100% - 70px);
+          overflow: hidden;
+          position: relative;
+
+          &:after {
+            content: '';
+            position: absolute;
+            right: 0;
+            width: 15px;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0,0,0,0) 0%, $playlist-bg-color 100%);
+          }
+
+        }
+
       }
 
       .wp-playlist-playing {
@@ -173,7 +196,8 @@
     font-size: 0;
     color: transparent;
     width: 24px;
-    height: 26px;
+    height: 13px;
+    line-height: 22px;
     background-size: contain;
     opacity: 1;
     transition: opacity .2s ease;

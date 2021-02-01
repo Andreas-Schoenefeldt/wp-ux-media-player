@@ -763,6 +763,9 @@ div .mejs-time-total {
       display: none !important; }
     .sh-player-player-container .wp-playlist {
       border: none; }
+    .sh-player-player-container .mejs-time {
+      font-size: 16px;
+      font-weight: 400; }
     .sh-player-player-container .mejs-container {
       background: #313131; }
       .sh-player-player-container .mejs-container .mejs-controls {
@@ -794,6 +797,18 @@ div .mejs-time-total {
         height: 40px;
         line-height: 25px;
         font-size: 16px; }
+        .sh-player-player-container .wp-playlist-tracks .wp-playlist-item .wp-playlist-caption {
+          white-space: nowrap;
+          width: calc(100% - 70px);
+          overflow: hidden;
+          position: relative; }
+          .sh-player-player-container .wp-playlist-tracks .wp-playlist-item .wp-playlist-caption:after {
+            content: '';
+            position: absolute;
+            right: 0;
+            width: 15px;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #fff 100%); }
       .sh-player-player-container .wp-playlist-tracks .wp-playlist-playing {
         font-weight: bold; }
       .sh-player-player-container .wp-playlist-tracks .wp-playlist-item-length {
@@ -848,7 +863,8 @@ div .mejs-time-total {
     font-size: 0;
     color: transparent;
     width: 24px;
-    height: 26px;
+    height: 13px;
+    line-height: 22px;
     background-size: contain;
     opacity: 1;
     transition: opacity .2s ease;

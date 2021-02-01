@@ -5,7 +5,7 @@ namespace WpUxMediaPlayer\Plugin;
 
 class Plugin {
 
-    const version = '1.0.8';
+    const version = '1.0.9';
     const plugin_name = 'wp-ux-media-player';
     const admin_page = 'wp-ux-media-player-admin';
 

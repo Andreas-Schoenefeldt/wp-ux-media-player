@@ -3,7 +3,7 @@
 Plugin Name: UX Media Player
 Plugin URI: https://github.com/Andreas-Schoenefeldt/wp-ux-media-player
 Description: Improves the standard wordpress media player to have a better skin and usability.
-Version: 1.0.1
+Version: 1.0.2
 Author: Andreas Schönefeldt
 Author URI: https://github.com/Andreas-Schoenefeldt
 Contributors: Andreas Schönefeldt

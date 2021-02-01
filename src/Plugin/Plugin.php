@@ -5,7 +5,7 @@ namespace WpUxMediaPlayer\Plugin;
 
 class Plugin {
 
-    const version = '1.0.3';
+    const version = '1.0.4';
     const plugin_name = 'wp-ux-media-player';
     const admin_page = 'wp-ux-media-player-admin';
 
@@ -72,11 +72,13 @@ class Plugin {
      */
     public function setLocale ($locale, $domain) {
         if ($domain === $this::plugin_name) {
-
-            $localParts = explode('_', $locale);
-            $locale = $localParts[0];
             if (!array_search($locale, $this::availableLocales)) {
-                $locale = $this::defaultLocale;
+                $localParts = explode('_', $locale);
+                $locale = $localParts[0];
+
+                if (!array_search($locale, $this::availableLocales)) {
+                    $locale = $this::defaultLocale;
+                }
             }
 
         }

@@ -1,0 +1,16 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: node-google-spreadsheet-translation-update\n"
+"Project-Id-Version: wp-ux-media-player\n"
+"Language: de\n"
+
+msgid "label.audio-files"
+msgstr "Audiodateien"
+
+msgid "label.view-less"
+msgstr "weniger sehen"
+
+msgid "label.view-more"
+msgstr "alle sehen"

@@ -56,6 +56,24 @@ module.exports = function(grunt) {
             }
         },
 
+        translation_spreadsheet_sync: {
+            options: {
+                spreadsheetId: '1YQ8woWHWX6EYaTvn73ykog3I6_ZA34xq36cMhxtnxF4',  // The player translations:  https://docs.google.com/spreadsheets/d/1YQ8woWHWX6EYaTvn73ykog3I6_ZA34xq36cMhxtnxF4/edit#gid=0
+                translationFormat: 'gettext',
+                fileBaseName: 'wp-ux-media-player' // wordpress plugins are kind of requiring a certain namespace in the fileg
+            },
+
+            import: {
+                options: {
+                    mode: 'import'
+                },
+                files: {
+                    src: 'languages/'
+                },
+
+            },
+        },
+
         bump: {
             options: {
                 files: ['package.json', pluginName + '.php', 'src/Plugin/Plugin.php'],
@@ -134,6 +152,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-prompt');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-bump');
+    grunt.loadNpmTasks('grunt-translation-spreadsheet-sync');
 
     grunt.registerTask('default', 'UI Development', function () {
         grunt.task.run('sass', 'autoprefixer', 'webpack', 'watch');

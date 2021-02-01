@@ -6,6 +6,9 @@
  * 
  * @since 4.1.3
  */
+
+use WpUxMediaPlayer\Plugin\Plugin;
+
 if ( ! defined( 'ABSPATH' ) ) {  exit;  }    // Exit if accessed directly
 
 if ( ! class_exists( 'sh_sc_audio_player' ) )
@@ -948,16 +951,15 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 				$outer_cls[] = 'avia-playlist-hide-cover';
 			}
 			
-			if( ! empty( $outer_styles ) )
-			{
+			if( ! empty( $outer_styles ) )  {
 				$outer_styles = ' style="' . implode( '', $outer_styles ) . '" ';
-			}
-			else
-			{
+			} else {
 				$outer_styles = '';
 			}
+
+			$outer_cls[] = 'js-sh-widget';
 			
-			$output .= '<div id="' . $id . '" class="' . implode( ' ', $outer_cls ) . '" ' . $outer_styles . '>';
+			$output .= '<div id="' . $id . '" class="' . implode( ' ', $outer_cls ) . '" ' . $outer_styles . ' data-widgets="sh-ux-media-player" data-item_count="' . count($ids) . '">';
 			
 			if( !empty($cover) || !empty($title) ) {
 				$output .=	'<div class="sh-player-cover-container">';
@@ -967,7 +969,7 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 				if (!empty($title)) {
                     $output .= '<div class="sh-title-container">';
                         $output .= '<h3 class="sh-title">' . $title . '</h3>';
-                        $output .= '<span class="sh-title-tracks">' . count($ids) . ' Audio Files</span>';
+                        $output .= '<span class="sh-title-tracks">' . count($ids) . ' ' . Plugin::get_translation('label.audio-files') . '</span>';
                     $output .= '</div>';
                 }
 				$output .=	'</div>';
@@ -975,9 +977,10 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 			
 			$output .=		'<div class="sh-player-player-container">';
 			$output .=			$player;
-			$output .=		'</div>';
-			
-			$output .= '</div>';
+            $output .=		'</div>';
+            $output .=		'<div class="sh-player__view-more trigger--more" data-view_less="' . Plugin::get_translation('label.view-less') . '">' . Plugin::get_translation('label.view-more') . '</div>';
+
+            $output .= '</div>';
 			
 		
 			return $output;

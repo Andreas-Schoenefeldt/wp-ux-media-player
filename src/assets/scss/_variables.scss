@@ -2,3 +2,20 @@ $header-color-bg: #666;
 $header-color: #fff;
 
 $content-spacing-side: 15px;
+
+// Player
+$player-height: 30px;
+$player-bg-color: #313131;
+
+// playlist
+$playlist-bg-color: #fff;
+$playlist-border-color: #bbb;
+
+$playlist-item-height: 40px;
+
+
+
+// CSS Variables
+:root {
+  --playlist-item-height: $playlist-item-height;
+}

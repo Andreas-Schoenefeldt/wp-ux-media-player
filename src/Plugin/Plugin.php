@@ -8,6 +8,10 @@ class Plugin {
     const version = '1.0.0';
     const plugin_name = 'wp-ux-media-player';
     const admin_page = 'wp-ux-media-player-admin';
+
+    const defaultLocale = 'en_US';
+    const availableLocales = ['en_US', 'de'];
+
     /**
      * @var string
      */
@@ -31,6 +35,10 @@ class Plugin {
         self::$jsNamespace = self::plugin_name . '-js';
         self::$jsJwNamespace = self::plugin_name . '-jw-js';
 
+        // load the text domains
+        add_action( 'plugins_loaded', [$this, 'initTranslations'], 0);
+        add_filter( 'plugin_locale', [$this, 'setLocale'], 10, 2);
+
         // shortcode Area
         add_action( 'init', [$this, 'init']);
         // add_action( "admin_init", array( $this, "admin_init") );
@@ -45,6 +53,31 @@ class Plugin {
             // default wordpress shortcodes
             // tbd
         }
+    }
+
+    public function initTranslations () {
+        load_plugin_textdomain( $this::plugin_name, false, dirname(plugin_basename($this->pluginFile)) . '/languages/' );
+    }
+
+    /**
+     * Enforces the use of an actual translated locale "en_US" locale for translations.
+     *
+     * This is necessary since we're using placeholder values for text instead of English text.
+     * thx to: https://carlalexander.ca/placeholders-wordpress-translations/
+     *
+     * @param string $locale
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function setLocale ($locale, $domain) {
+        if ($domain === $this::plugin_name) {
+            if (!array_search($locale, $this::availableLocales)) {
+                $locale = $this::defaultLocale;
+            }
+
+        }
+        return $locale;
     }
 
     public static function getCacheDirBase() {
@@ -62,6 +95,10 @@ class Plugin {
     public static function get_option($name, $default = '') {
         $options = get_option( self::plugin_name );
         return isset($options[$name]) ? $options[$name] : $default;
+    }
+
+    public static function get_translation ($key) {
+        return __($key, self::plugin_name);
     }
 
     public function init_assets () {

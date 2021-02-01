@@ -1,18 +1,36 @@
-$header-color-bg: #666;
-$header-color: #fff;
+// colors
+
+$gray-1: #313131;
+$gray-2: #666;
+$gray-3: #bbb;
+
+$white: #fff;
+
+// fonts
+
+$standard-fontsize: 16px;
+
+// header
+
+$header-color-bg: $gray-1;
+$header-color: $white;
 
 $content-spacing-side: 15px;
 
 // Player
 $player-height: 30px;
-$player-bg-color: #313131;
+$player-bg-color: $gray-1;
 
 // playlist
-$playlist-bg-color: #fff;
-$playlist-border-color: #bbb;
+$playlist-bg-color: $white;
+$playlist-border-color: $gray-3;
 
 $playlist-item-height: 40px;
 $playlist-item-content-height: $playlist-item-height - $content-spacing-side;
+
+// view more button
+$view-more-bg-color: #007cba;
+$view-more-padding: 8px;
 
 
 

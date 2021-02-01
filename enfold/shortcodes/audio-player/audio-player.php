@@ -968,7 +968,7 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
                 }
 				if (!empty($title)) {
                     $output .= '<div class="sh-title-container">';
-                        $output .= '<h3 class="sh-title">' . $title . '</h3>';
+                        $output .= '<div class="sh-title">' . $title . '</div>';
                         $output .= '<span class="sh-title-tracks">' . count($ids) . ' ' . Plugin::get_translation('label.audio-files') . '</span>';
                     $output .= '</div>';
                 }

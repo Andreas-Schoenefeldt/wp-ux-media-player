@@ -731,22 +731,25 @@ div .mejs-time-total {
   display: none; }
 
 .sh-player-cover-container {
-  background: #666;
-  color: #fff; }
+  background: #313131;
+  color: #fff;
+  border-bottom: 2px solid #fff; }
 
 .sh-title-container {
   padding: 0 15px; }
   .sh-title-container .sh-title {
     font: inherit;
     font-weight: bold;
+    font-size: 34px;
+    line-height: 34px;
     color: inherit;
     display: block;
     margin: 0;
-    padding: 15px 0 0;
-    font-size: 1.2em; }
+    padding: 15px 0 0; }
   .sh-title-container .sh-title-tracks {
     display: block;
-    padding-bottom: 7.5px; }
+    padding-bottom: 7.5px;
+    font-size: 16px; }
 
 .sh-player {
   margin-bottom: 2rem; }
@@ -789,7 +792,8 @@ div .mejs-time-total {
         padding: 7.5px 0;
         border-bottom: 1px solid #bbb;
         height: 40px;
-        line-height: 25px; }
+        line-height: 25px;
+        font-size: 16px; }
       .sh-player-player-container .wp-playlist-tracks .wp-playlist-playing {
         font-weight: bold; }
       .sh-player-player-container .wp-playlist-tracks .wp-playlist-item-length {
@@ -802,16 +806,16 @@ div .mejs-time-total {
       border-radius: 0; }
   .sh-player__view-more {
     display: block;
-    padding: 15px;
+    padding: 8px;
     text-align: center;
     color: #fff;
-    background: #313131;
+    background: #007cba;
     transition: background-color .2s ease;
     cursor: pointer;
     position: relative;
     top: -1px; }
     .sh-player__view-more:hover {
-      background: #575757; }
+      background: #08adff; }
   .sh-player__download {
     border: none;
     display: inline-block;
@@ -820,8 +824,8 @@ div .mejs-time-total {
     cursor: pointer;
     font-size: 0;
     color: transparent;
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 26px;
     background: url("download.svg") center center no-repeat;
     background-size: contain;
     opacity: 1;

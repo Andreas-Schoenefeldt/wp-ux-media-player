@@ -25,6 +25,9 @@
 }
 
 .sh-player {
+
+  margin-bottom: 2rem;
+
   &-player-container {
 
     border: 1px solid $playlist-border-color;
@@ -49,6 +52,8 @@
     }
 
     .wp-playlist {
+      margin: 0;
+      padding: 0;
       background: $playlist-bg-color !important;
     }
 

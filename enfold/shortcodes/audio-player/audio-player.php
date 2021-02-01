@@ -250,8 +250,8 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 			$c = array(
 
                         array(
-                            "name"			=> __( "Playlist Title", 'avia_framework' ),
-                            "desc"			=> __( "Set the Title of the playlist", 'avia_framework' ),
+                            "name"			=> Plugin::get_translation('widget.titles.playlist-title'),
+                            "desc"			=> Plugin::get_translation('widget.descriptions.playlist-title'),
                             "id"			=> "title",
                             "type"			=> "input",
                             "std"			=> ''

@@ -4,7 +4,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: node-google-spreadsheet-translation-update\n"
 "Project-Id-Version: wp-ux-media-player\n"
-"Language: en_US\n"
+"Language: en\n"
 
 msgid "label.audio-files"
 msgstr "Audio Files"
@@ -14,3 +14,9 @@ msgstr "View Less"
 
 msgid "label.view-more"
 msgstr "View More"
+
+msgid "widget.descriptions.playlist-title"
+msgstr "Set the Title of the playlist"
+
+msgid "widget.titles.playlist-title"
+msgstr "Playlist Title"

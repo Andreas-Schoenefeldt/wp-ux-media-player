@@ -9,8 +9,8 @@ class Plugin {
     const plugin_name = 'wp-ux-media-player';
     const admin_page = 'wp-ux-media-player-admin';
 
-    const defaultLocale = 'en_US';
-    const availableLocales = ['en_US', 'de'];
+    const defaultLocale = 'en';
+    const availableLocales = ['en', 'de'];
 
     /**
      * @var string
@@ -72,6 +72,9 @@ class Plugin {
      */
     public function setLocale ($locale, $domain) {
         if ($domain === $this::plugin_name) {
+
+            $localParts = explode('_', $locale);
+            $locale = $localParts[0];
             if (!array_search($locale, $this::availableLocales)) {
                 $locale = $this::defaultLocale;
             }

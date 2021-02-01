@@ -14,3 +14,9 @@ msgstr "weniger sehen"
 
 msgid "label.view-more"
 msgstr "alle sehen"
+
+msgid "widget.descriptions.playlist-title"
+msgstr "Geben sie den Titel der Widergabeliste ein"
+
+msgid "widget.titles.playlist-title"
+msgstr "Widergabelisten Titel"

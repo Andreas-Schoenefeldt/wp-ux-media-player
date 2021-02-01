@@ -784,6 +784,8 @@ div .mejs-time-total {
       overflow: hidden;
       transition: max-height .35s ease; }
       .sh-player-player-container .wp-playlist-tracks .wp-playlist-item {
+        display: flex;
+        justify-content: space-between;
         padding: 7.5px 0;
         border-bottom: 1px solid #bbb;
         height: 40px; }
@@ -809,6 +811,13 @@ div .mejs-time-total {
     top: -1px; }
     .sh-player__view-more:hover {
       background: #575757; }
+  .sh-player__download {
+    border: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    font-size: 0; }
 
 .avia-playlist-hide-cover .wp-playlist-current-item {
   height: auto; }

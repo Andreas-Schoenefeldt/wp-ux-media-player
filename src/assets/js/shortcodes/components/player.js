@@ -1,5 +1,17 @@
 import Widgets from 'js-widget-hooks';
 
+var playerInitialized = function (player) {
+    return player.find('.wp-playlist-tracks').length > 0;
+};
+
+var executeOnInitialized = function (player, callback) {
+    if (!playerInitialized(player)) {
+        window.setTimeout(executeOnInitialized.bind(null, player, callback));
+    } else {
+        callback();
+    }
+};
+
 (function($) {
 
     Widgets.register('sh-ux-media-player', function (elem) {
@@ -9,8 +21,6 @@ import Widgets from 'js-widget-hooks';
         var moreText = more.text();
         var lessText = more.data('view_less');
         var itemCount = el.data('item_count');
-
-        console.log(itemCount);
 
         more.click(function (e) {
             // tracklist is initialized later on via js, so we reinit it here
@@ -26,8 +36,29 @@ import Widgets from 'js-widget-hooks';
             }
 
             expanded = !expanded;
-        })
+        });
 
+        executeOnInitialized(el, function () {
+            el.find('.wp-playlist-item').each(function () {
+                var item = $(this);
+                var url = item.find('a').attr('href');
+                var btn = $('<button type="button" class="sh-player__download" title="' + el.attr('download-text') + '">download</button>');
+
+                btn.click(function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // thx to https://stackoverflow.com/a/37673039/2776727 - this allows to directly download this for modern browsers
+                    var anchor = document.createElement('a');
+                    anchor.href = url;
+                    anchor.target = '_blank';
+                    anchor.download = url.split(/\//gi).pop();
+                    anchor.click();
+                });
+
+                item.append(btn);
+            });
+        });
 
     });
 

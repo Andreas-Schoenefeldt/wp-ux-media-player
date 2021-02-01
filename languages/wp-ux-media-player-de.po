@@ -7,7 +7,10 @@ msgstr ""
 "Language: de\n"
 
 msgid "label.audio-files"
-msgstr "Audiodateien"
+msgstr "Audio Dateien"
+
+msgid "label.download-file"
+msgstr "Diese Audio Datei herunterladen"
 
 msgid "label.view-less"
 msgstr "weniger sehen"

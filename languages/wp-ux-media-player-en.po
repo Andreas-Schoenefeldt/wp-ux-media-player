@@ -9,6 +9,9 @@ msgstr ""
 msgid "label.audio-files"
 msgstr "Audio Files"
 
+msgid "label.download-file"
+msgstr "Download this audio file"
+
 msgid "label.view-less"
 msgstr "View Less"
 

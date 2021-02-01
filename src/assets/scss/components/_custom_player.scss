@@ -79,6 +79,8 @@
       transition: max-height .35s ease;
 
       .wp-playlist-item {
+        display: flex;
+        justify-content: space-between;
         padding: ($content-spacing-side/2) 0;
         border-bottom: 1px solid $playlist-border-color;
         height: $playlist-item-height;
@@ -107,7 +109,6 @@
     }
   }
 
-
   &__view-more {
     display: block;
     padding: $content-spacing-side;
@@ -122,7 +123,15 @@
     &:hover {
       background: lighten($player-bg-color, 15%);
     }
+  }
 
+  &__download {
+    border: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    font-size: 0;
   }
 
 }

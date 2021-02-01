@@ -84,6 +84,7 @@
         padding: ($content-spacing-side/2) 0;
         border-bottom: 1px solid $playlist-border-color;
         height: $playlist-item-height;
+        line-height: $playlist-item-content-height;
       }
 
       .wp-playlist-playing {
@@ -132,6 +133,17 @@
     padding: 0;
     cursor: pointer;
     font-size: 0;
+    color: transparent;
+    width: $playlist-item-content-height;
+    height: $playlist-item-content-height;
+    background: url('download.svg') center center no-repeat;
+    background-size: contain;
+    opacity: 1;
+    transition: opacity .2s ease;
+
+    &:hover {
+      opacity: 0.55;
+    }
   }
 
 }

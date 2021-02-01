@@ -788,7 +788,8 @@ div .mejs-time-total {
         justify-content: space-between;
         padding: 7.5px 0;
         border-bottom: 1px solid #bbb;
-        height: 40px; }
+        height: 40px;
+        line-height: 25px; }
       .sh-player-player-container .wp-playlist-tracks .wp-playlist-playing {
         font-weight: bold; }
       .sh-player-player-container .wp-playlist-tracks .wp-playlist-item-length {
@@ -817,7 +818,16 @@ div .mejs-time-total {
     margin: 0;
     padding: 0;
     cursor: pointer;
-    font-size: 0; }
+    font-size: 0;
+    color: transparent;
+    width: 25px;
+    height: 25px;
+    background: url("download.svg") center center no-repeat;
+    background-size: contain;
+    opacity: 1;
+    transition: opacity .2s ease; }
+    .sh-player__download:hover {
+      opacity: 0.55; }
 
 .avia-playlist-hide-cover .wp-playlist-current-item {
   height: auto; }

@@ -20,6 +20,7 @@ var executeOnInitialized = function (player, callback) {
         var more = el.find('.trigger--more');
         var moreText = more.text();
         var lessText = more.data('view_less');
+        var downloadText = el.data('download_text');
         var itemCount = el.data('item_count');
 
         more.click(function (e) {
@@ -42,7 +43,7 @@ var executeOnInitialized = function (player, callback) {
             el.find('.wp-playlist-item').each(function () {
                 var item = $(this);
                 var url = item.find('a').attr('href');
-                var btn = $('<button type="button" class="sh-player__download" title="' + el.attr('download-text') + '">download</button>');
+                var btn = $('<button type="button" class="sh-player__download" title="' + downloadText + '">download</button>');
 
                 btn.click(function (e) {
                     e.preventDefault();

@@ -6,7 +6,7 @@ var playerInitialized = function (player) {
 
 var executeOnInitialized = function (player, callback) {
     if (!playerInitialized(player)) {
-        window.setTimeout(executeOnInitialized.bind(null, player, callback));
+        window.setTimeout(executeOnInitialized.bind(null, player, callback), 100);
     } else {
         callback();
     }

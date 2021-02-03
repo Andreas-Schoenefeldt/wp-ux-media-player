@@ -18,7 +18,8 @@ var executeOnInitialized = function (player, callback) {
         var expanded = false;
         var el = $(elem);
         var more = el.find('.trigger--more');
-        var moreText = more.text();
+        var moreTextEl = more.find('.target--text');
+        var moreText = moreTextEl.text();
         var lessText = more.data('view_less');
         var downloadText = el.data('download_text');
         var shareText = el.data('share_text');
@@ -30,10 +31,12 @@ var executeOnInitialized = function (player, callback) {
             var itemHeight = $(trackList.children()[0]).outerHeight();
 
             if (expanded) {
-                more.text(moreText);
+                el.removeClass('sh-player--expanded');
+                moreTextEl.text(moreText);
                 trackList.css({maxHeight: (2 * itemHeight) + 'px'});
             } else {
-                more.text(lessText);
+                el.addClass('sh-player--expanded');
+                moreTextEl.text(lessText);
                 trackList.css({maxHeight: (itemCount * itemHeight) + 'px'});
             }
 

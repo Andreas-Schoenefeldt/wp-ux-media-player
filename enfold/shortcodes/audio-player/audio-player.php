@@ -978,7 +978,7 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 			$output .=		'<div class="sh-player-player-container">';
 			$output .=			$player;
             $output .=		'</div>';
-            $output .=		'<div class="sh-player__view-more trigger--more" data-view_less="' . Plugin::get_translation('label.view-less') . '">' . Plugin::get_translation('label.view-more') . '</div>';
+            $output .=		'<div class="sh-player__view-more trigger--more" data-view_less="' . Plugin::get_translation('label.view-less') . '"><span class="target--text">' . Plugin::get_translation('label.view-more') . '</span> <span class="sh-player__arrow-icon"></span></div>';
 
             $output .= '</div>';
 			

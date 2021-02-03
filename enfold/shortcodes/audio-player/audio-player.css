@@ -823,6 +823,8 @@ div .mejs-time-total {
     display: block;
     padding: 8px;
     text-align: center;
+    font-size: 18px;
+    line-height: 29px;
     color: #fff;
     background: #007cba;
     transition: background-color .2s ease;
@@ -856,58 +858,38 @@ div .mejs-time-total {
       z-index: 5;
       color: #313131;
       opacity: 1; }
-  .sh-player__icon {
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    font-size: 0;
-    color: transparent;
-    width: 24px;
-    height: 13px;
-    line-height: 22px;
-    background-size: contain;
-    opacity: 1;
-    transition: opacity .2s ease;
-    margin: 0; }
-    .sh-player__icon:hover {
-      opacity: 0.55; }
-  .sh-player__download {
-    background: url("download.svg") center center no-repeat; }
-  .sh-player__share {
-    background: url("mail.svg") center center no-repeat; }
 
-.avia-playlist-hide-cover .wp-playlist-current-item {
-  height: auto; }
-
-#top .avia-playlist-custom-background-color .wp-playlist {
-  background: transparent; }
-
-#top .avia-playlist-custom-font-color * {
-  color: inherit; }
-
-#top .avia-playlist-custom-font-color .wp-playlist-item > * {
-  opacity: 0.8; }
-
-#top .avia-playlist-custom-font-color .wp-playlist-item.wp-playlist-playing > * {
-  opacity: 1; }
-
-#top .avia-playlist-custom-border-color .wp-playlist {
-  border: none; }
-
-#top .avia-playlist-custom-border-color {
-  border-width: 1px;
-  border-style: solid; }
-
-#top .avia-playerstyle-minimal .wp-playlist {
+.sh-player__icon {
+  border: none;
   padding: 0;
-  border-color: transparent;
-  background: transparent; }
+  cursor: pointer;
+  font-size: 0;
+  color: transparent;
+  width: 24px;
+  height: 13px;
+  line-height: 22px;
+  background-size: contain;
+  opacity: 1;
+  transition: opacity .2s ease;
+  margin: 0; }
+  .sh-player__icon:hover {
+    opacity: 0.55; }
 
-#top .avia-playerstyle-minimal .wp-playlist .wp-playlist-item {
-  border-color: transparent; }
+.sh-player__download {
+  background: url("download.svg") center center no-repeat; }
 
-#top .avia-playerstyle-minimal.avia-playlist-custom-background-color .wp-playlist {
-  padding: 10px; }
+.sh-player__share {
+  background: url("mail.svg") center center no-repeat; }
 
-#top .sh-player-container.sh-player-hide-playlist .wp-playlist-tracks {
-  display: none; }
+.sh-player__arrow-icon {
+  display: inline-block;
+  background-size: contain;
+  width: 1em;
+  height: 1em;
+  background: url("pfeil_runter.svg") center center no-repeat;
+  position: relative;
+  top: 2px;
+  margin-left: 3px; }
+
+.sh-player--expanded .sh-player__arrow-icon {
+  background: url("pfeil_hoch.svg") center center no-repeat; }

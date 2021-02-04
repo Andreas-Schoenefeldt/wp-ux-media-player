@@ -154,11 +154,15 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-translation-spreadsheet-sync');
 
+    grunt.registerTask('ui', 'CSS and JS', function () {
+        grunt.task.run('sass', 'autoprefixer', 'webpack');
+    });
+
     grunt.registerTask('default', 'UI Development', function () {
-        grunt.task.run('sass', 'autoprefixer', 'webpack', 'watch');
+        grunt.task.run('ui', 'watch');
     });
 
     grunt.registerTask('build', 'Production Build', function() {
-        grunt.task.run('prompt', 'bump', 'shell:build');
+        grunt.task.run('prompt', 'ui', 'bump', 'shell:build');
     });
 };

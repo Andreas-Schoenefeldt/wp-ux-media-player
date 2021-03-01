@@ -17,9 +17,9 @@ window.onload = function () {
         for (var i = 0; i < frames.length; i++) {
             var iframe = frames[i];
             iframe.id = 'id-' + id;
-            var player = new Vimeo.Player(iframe);
+            var player = Froogaloop(iframe);
 
-            player.on('play', function() {
+            player.addEvent('play', function() {
 
                 var currentId = parseInt(this.id.substr(3));
                 console.log(currentId);
@@ -28,7 +28,7 @@ window.onload = function () {
 
                 players.forEach(function (p, index) {
                     if (currentId !== index) {
-                        p.pause();
+                        p.api('pause');
                     }
                 })
 

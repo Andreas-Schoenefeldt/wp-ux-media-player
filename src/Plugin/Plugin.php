@@ -5,7 +5,7 @@ namespace WpUxMediaPlayer\Plugin;
 
 class Plugin {
 
-    const version = '1.1.3';
+    const version = '1.1.4';
     const plugin_name = 'wp-ux-media-player';
     const admin_page = 'wp-ux-media-player-admin';
 
@@ -46,10 +46,6 @@ class Plugin {
     }
 
     public function init () {
-
-        wp_register_script(self::$jsNamespace . '-vimeo', 'https://player.vimeo.com/api/player.js');
-        wp_enqueue_script(self::$jsNamespace. '-vimeo');
-
         if (class_exists('aviaShortcodeTemplate')) {
             // enfold theme shortcode link
             include_once ($this->getPluginFilePath('enfold/shortcodes/audio-player/audio-player.php'));

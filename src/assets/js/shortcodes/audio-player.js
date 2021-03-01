@@ -15,12 +15,12 @@ window.onload = function () {
         console.log(frames);
 
         for (var i = 0; i < frames.length; i++) {
-            var ifram = frames[i];
-            var player = new Player(iframe);
+            var iframe = frames[i];
+            var player = new Vimeo.Player(iframe);
 
             player.on('play', function() {
-                console.log('played the video!');
-            });
+                console.log('played the video!', this);
+            }.bind(iframe));
         }
 
 

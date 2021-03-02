@@ -1,6 +1,6 @@
 {
   "name": "wp-ux-media-player",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Improves the standard wordpress media player to have a better skin and usability.",
   "main": "Gruntfile.js",
   "scripts": {

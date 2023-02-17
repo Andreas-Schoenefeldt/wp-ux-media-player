@@ -7,6 +7,7 @@
  * @since 4.1.3
  */
 
+use WpUxMediaPlayer\Plugin\Player;
 use WpUxMediaPlayer\Plugin\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {  exit;  }    // Exit if accessed directly
@@ -857,8 +858,6 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 				add_filter( 'wp_mime_type_icon', array( $this, 'handler_wp_mime_type_icon' ), 10, 3 );
 			}
 			
-			$player = wp_playlist_shortcode( $args );
-			
 			if( ( $media_icon == 'show' ) && ( is_numeric( $cover_id  ) ) )
 			{
 				remove_filter( 'wp_get_attachment_image_src', array( $this, 'handler_wp_get_attachment_image_src' ), 10 );
@@ -957,30 +956,17 @@ if ( ! class_exists( 'sh_sc_audio_player' ) )
 				$outer_styles = '';
 			}
 
-			$outer_cls[] = 'js-sh-widget';
+            $player = new Player([
+                'id' => $id,
+                'outerClasses' => $outer_cls,
+                'outerStyles' => $outer_styles,
+                'mediaIds' => $ids,
+                'cover' => $cover,
+                'title' => $title,
+                'wpPlayerAttributes' => $args
+            ]);
 			
-			$output .= '<div id="' . $id . '" class="' . implode( ' ', $outer_cls ) . '" ' . $outer_styles . ' data-widgets="sh-ux-media-player" data-share_text="' . Plugin::get_translation('label.share-file') . '" data-download_text="' . Plugin::get_translation('label.download-file') . '" data-item_count="' . count($ids) . '">';
-			
-			if( !empty($cover) || !empty($title) ) {
-				$output .=	'<div class="sh-player-cover-container">';
-				if (!empty($cover)) {
-                    $output .= '<div class="sh-player-cover">' . $cover . '</div>';
-                }
-				if (!empty($title)) {
-                    $output .= '<div class="sh-title-container">';
-                        $output .= '<div class="sh-title">' . $title . '</div>';
-                        $output .= '<span class="sh-title-tracks">' . count($ids) . ' ' . Plugin::get_translation('label.audio-files') . '</span>';
-                    $output .= '</div>';
-                }
-				$output .=	'</div>';
-			}
-			
-			$output .=		'<div class="sh-player-player-container">';
-			$output .=			$player;
-            $output .=		'</div>';
-            $output .=		'<div class="sh-player__view-more trigger--more" data-view_less="' . Plugin::get_translation('label.view-less') . '"><span class="target--text">' . Plugin::get_translation('label.view-more') . '</span> <span class="sh-player__arrow-icon"></span></div>';
-
-            $output .= '</div>';
+			$output .= $player->get_markup();
 			
 		
 			return $output;

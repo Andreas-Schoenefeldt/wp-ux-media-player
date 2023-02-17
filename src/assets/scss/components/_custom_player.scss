@@ -21,7 +21,7 @@
 
   .sh-title-tracks {
     display: block;
-    padding-bottom: ($content-spacing-side / 2);
+    padding-bottom: ($content-spacing-side * 0.5);
     font-size: $standard-fontsize;
   }
 
@@ -60,13 +60,14 @@
         left: -1px;
         right: -1px;
         background: $player-bg-color!important;
+        padding: 0;
 
         .mejs-time {
           padding-right: $content-spacing-side;
         }
 
         .mejs-playpause-button {
-          padding-left: $content-spacing-side / 2;
+          padding-left: $content-spacing-side * 0.5;
         }
 
       }
@@ -89,7 +90,7 @@
       .wp-playlist-item {
         display: flex;
         justify-content: space-between;
-        padding: ($content-spacing-side/2) 0;
+        padding: ($content-spacing-side * 0.5) 0;
         border-bottom: 1px solid $playlist-border-color;
         height: $playlist-item-height;
         line-height: $playlist-item-content-height;
@@ -116,6 +117,7 @@
 
       .wp-playlist-playing {
         font-weight: bold;
+        background: transparent;
       }
 
       .wp-playlist-item-length {
@@ -133,6 +135,7 @@
         min-width: auto !important;
         width: 100% !important;
         border-radius: 0;
+        max-height: 30px;
       }
     }
   }

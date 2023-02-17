@@ -12,6 +12,7 @@
     opacity: 1;
     transition: opacity .2s ease;
     margin: 0;
+    background-color: transparent!important;
 
     &:hover {
       opacity: 0.55;

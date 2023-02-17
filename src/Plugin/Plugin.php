@@ -51,7 +51,7 @@ class Plugin {
             include_once ($this->getPluginFilePath('enfold/shortcodes/audio-player/audio-player.php'));
         } else {
             // default wordpress shortcodes
-            // tbd
+            add_shortcode('ux-audio-player',  ShortCodes::class . '::audioPlayer');
         }
     }
 

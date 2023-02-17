@@ -38,5 +38,5 @@ $view-more-line-height: 29px;
 
 // CSS Variables
 :root {
-  --playlist-item-height: $playlist-item-height;
+  --playlist-item-height: #{$playlist-item-height};
 }

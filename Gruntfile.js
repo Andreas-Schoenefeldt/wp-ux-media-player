@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         pkg: pkg,
 
         sass: {
-            options: { implementation: require('node-sass')},
+            options: { implementation: require('sass')},
             ui: {
                 files: [
                     {

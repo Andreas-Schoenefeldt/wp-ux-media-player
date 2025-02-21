@@ -7,3 +7,6 @@ build/
 *.log
 *.sql
 *.sqlite
+
+# OS
+.DS_Store

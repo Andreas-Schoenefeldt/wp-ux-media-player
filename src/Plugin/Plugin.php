@@ -38,6 +38,7 @@ class Plugin {
         // load the text domains
         add_action( 'plugins_loaded', [$this, 'initTranslations'], 0);
         add_filter( 'plugin_locale', [$this, 'setLocale'], 10, 2);
+        add_filter( 'load_textdomain_mofile', [$this, 'loadTextdomainMofile'], 10, 2);
 
         // shortcode Area
         add_action( 'init', [$this, 'init']);
@@ -53,6 +54,36 @@ class Plugin {
             // default wordpress shortcodes
             add_shortcode('ux-audio-player',  ShortCodes::class . '::audioPlayer');
         }
+    }
+
+    public function loadTextdomainMofile($translationFile, $domain) {
+        if ($domain === $this::plugin_name) {
+            if (!file_exists($translationFile)) {
+                $locale = determine_locale();
+
+                // test the simplified locale
+                $locale = explode('_', $locale)[0];
+
+                $re = '/(.*?)' . $this::plugin_name  . '-\w+\.mo$/m';
+
+                preg_match_all($re, $translationFile, $matches, PREG_SET_ORDER, 0);
+                $path = $matches[0][1];
+
+                $altTranslationFile = $path . $this::plugin_name . '-' . $locale . '.mo';
+
+                if (file_exists($altTranslationFile)) {
+                    $translationFile = $altTranslationFile;
+                } else {
+                    $defaultTranslationFile = $path . $this::plugin_name . '-' . $this::defaultLocale . '.mo';
+
+                    if (file_exists($defaultTranslationFile)) {
+                        $translationFile = $defaultTranslationFile;
+                    }
+                }
+            }
+        }
+
+        return $translationFile;
     }
 
     public function initTranslations () {

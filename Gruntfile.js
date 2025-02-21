@@ -162,7 +162,7 @@ module.exports = function(grunt) {
         grunt.task.run('ui', 'watch');
     });
 
-    grunt.registerTask('build', 'Production Build', function() {
+    grunt.registerTask('release', 'Production Release', function() {
         grunt.task.run('prompt', 'ui', 'bump', 'shell:build');
     });
 };

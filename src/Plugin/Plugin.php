@@ -40,6 +40,8 @@ class Plugin {
         add_filter( 'plugin_locale', [$this, 'setLocale'], 10, 2);
         add_filter( 'load_textdomain_mofile', [$this, 'loadTextdomainMofile'], 10, 2);
 
+        add_filter('avia_load_shortcodes', [$this, 'initAviaShortcodes']);
+
         // shortcode Area
         add_action( 'init', [$this, 'init']);
         // add_action( "admin_init", array( $this, "admin_init") );
@@ -47,13 +49,13 @@ class Plugin {
     }
 
     public function init () {
-        if (class_exists('aviaShortcodeTemplate')) {
-            // enfold theme shortcode link
-            include_once ($this->getPluginFilePath('enfold/shortcodes/audio-player/audio-player.php'));
-        } else {
-            // default wordpress shortcodes
-            add_shortcode('ux-audio-player',  ShortCodes::class . '::audioPlayer');
-        }
+        add_shortcode('ux-audio-player',  ShortCodes::class . '::audioPlayer');
+    }
+
+    public function initAviaShortcodes ($paths) {
+        $paths[] = $this->getPluginFilePath('enfold/shortcodes/');
+
+        return $paths;
     }
 
     public function loadTextdomainMofile($translationFile, $domain) {

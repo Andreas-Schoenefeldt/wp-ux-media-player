@@ -8,7 +8,8 @@ class Player
         'outerClasses' => [],
         'outerStyles' => '',
         'cover' => '',
-        'title' => ''
+        'title' => '',
+        'collapseFrom' => 8 // the number of tracks, that are shown initially
     ];
 
     protected const WP_PLAYER_DEFAULTS = [
@@ -43,10 +44,7 @@ class Player
      *
      * @param array $attributes
      */
-    public function __construct(
-        array $attributes = []
-    ) {
-
+    public function __construct(array $attributes = []) {
         $attributes['wpPlayerAttributes'] = array_merge(self::WP_PLAYER_DEFAULTS, $attributes['wpPlayerAttributes'] ?: []);
 
         $this->attributes = array_merge(self::DEFAULTS, $attributes);
@@ -77,7 +75,9 @@ class Player
         $player = wp_playlist_shortcode( $this->attributes['wpPlayerAttributes'] );
         $ids = $this->attributes['wpPlayerAttributes']['ids'];
 
-        $output = '<div id="' . $this->attributes['id'] . '" class="' . implode( ' ', $this->attributes['outerClasses'] ) . '" ' . $this->attributes['outerStyles'] . ' data-widgets="sh-ux-media-player" data-share_text="' . Plugin::get_translation('label.share-file') . '" data-download_text="' . Plugin::get_translation('label.download-file') . '" data-item_count="' . count($ids) . '">';
+        $collapsable = count($ids) > $this->attributes['collapseFrom'];
+
+        $output = '<div id="' . $this->attributes['id'] . '" class="' . implode( ' ', $this->attributes['outerClasses'] ) . '" ' . $this->attributes['outerStyles'] . ' data-widgets="sh-ux-media-player" data-share_text="' . Plugin::get_translation('label.share-file') . '" data-download_text="' . Plugin::get_translation('label.download-file') . '" data-show_count="' . $this->attributes['collapseFrom'] . '" data-item_count="' . count($ids) . '">';
 
         if( !empty($this->attributes['cover']) || !empty($this->attributes['title']) ) {
             $output .=	'<div class="sh-player-cover-container">';
@@ -93,10 +93,12 @@ class Player
             $output .=	'</div>';
         }
 
-        $output .=		'<div class="sh-player-player-container">';
+        $output .=		'<div class="sh-player-player-container' . ($collapsable ? ' sh-player-player-container--collapsable' : '') .'">';
         $output .=			$player;
         $output .=		'</div>';
-        $output .=		'<div class="sh-player__view-more trigger--more" data-view_less="' . Plugin::get_translation('label.view-less') . '"><span class="target--text">' . Plugin::get_translation('label.view-more') . '</span> <span class="sh-player__arrow-icon"></span></div>';
+        if ($collapsable) {
+            $output .=		'<div class="sh-player__view-more trigger--more" data-view_less="' . Plugin::get_translation('label.view-less') . '"><span class="target--text">' . Plugin::get_translation('label.view-more') . '</span> <span class="sh-player__arrow-icon"></span></div>';
+        }
 
         $output .= '</div>';
 

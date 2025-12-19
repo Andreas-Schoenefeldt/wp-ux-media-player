@@ -38,7 +38,15 @@
 
     border-top: none;
     border-bottom: none;
+    border-bottom: none;
+
     min-height: $player-height + (2 * $playlist-item-height);
+
+    &--collapsable {
+      .wp-playlist-tracks {
+        border-bottom: none!important;
+      }
+    }
 
     audio, .mejs-mediaelement, .mejs-volume-button, .mejs-horizontal-volume-slider {
       display: none!important;
@@ -84,6 +92,7 @@
       padding: 0 $content-spacing-side;
       max-height: 2*$playlist-item-height;
       min-height: 2*$playlist-item-height;
+      border-bottom: 1px solid $playlist-border-color;
       overflow: hidden;
       transition: max-height .35s ease;
 
@@ -95,6 +104,10 @@
         height: $playlist-item-height;
         line-height: $playlist-item-content-height;
         font-size: $standard-fontsize;
+
+        &:last-child {
+          border-bottom-color: transparent;
+        }
 
         .wp-playlist-caption {
           white-space: nowrap;

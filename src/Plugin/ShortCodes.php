@@ -23,15 +23,18 @@ class ShortCodes
             explode(',', $attributes['media-ids'])
         );
 
-        $player = new Player([
-
+        $attributes = [
             'title' => $attributes['title'],
-
             'wpPlayerAttributes' => [
                 'ids' => $mediaIds
             ]
+        ];
 
-        ]);
+        if (array_key_exists('collapse-from', $attributes)) {
+            $attributes['collapseFrom'] = (int) $attributes['collapse-from'];
+        }
+
+        $player = new Player($attributes);
 
         $player->attach_assets();
 

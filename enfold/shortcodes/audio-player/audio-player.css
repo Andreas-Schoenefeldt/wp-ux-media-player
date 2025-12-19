@@ -294,7 +294,7 @@
 }
 
 .mejs-time-total {
-  background: hsla(0deg, 0%, 100%, 0.3);
+  background: hsla(0, 0%, 100%, 0.3);
   margin: 5px 0 0;
   width: 100%;
 }
@@ -302,8 +302,8 @@
 .mejs-time-buffering {
   -webkit-animation: b 2s linear infinite;
   animation: b 2s linear infinite;
-  background: -webkit-linear-gradient(135deg, hsla(0deg, 0%, 100%, 0.4) 25%, transparent 0, transparent 50%, hsla(0deg, 0%, 100%, 0.4) 0, hsla(0deg, 0%, 100%, 0.4) 75%, transparent 0, transparent);
-  background: linear-gradient(-45deg, hsla(0deg, 0%, 100%, 0.4) 25%, transparent 0, transparent 50%, hsla(0deg, 0%, 100%, 0.4) 0, hsla(0deg, 0%, 100%, 0.4) 75%, transparent 0, transparent);
+  background: -webkit-linear-gradient(135deg, hsla(0, 0%, 100%, 0.4) 25%, transparent 0, transparent 50%, hsla(0, 0%, 100%, 0.4) 0, hsla(0, 0%, 100%, 0.4) 75%, transparent 0, transparent);
+  background: linear-gradient(-45deg, hsla(0, 0%, 100%, 0.4) 25%, transparent 0, transparent 50%, hsla(0, 0%, 100%, 0.4) 0, hsla(0, 0%, 100%, 0.4) 75%, transparent 0, transparent);
   background-size: 15px 15px;
   width: 100%;
 }
@@ -325,16 +325,16 @@
   }
 }
 .mejs-time-loaded {
-  background: hsla(0deg, 0%, 100%, 0.3);
+  background: hsla(0, 0%, 100%, 0.3);
 }
 
 .mejs-time-current,
 .mejs-time-handle-content {
-  background: hsla(0deg, 0%, 100%, 0.9);
+  background: hsla(0, 0%, 100%, 0.9);
 }
 
 .mejs-time-hovered {
-  background: hsla(0deg, 0%, 100%, 0.5);
+  background: hsla(0, 0%, 100%, 0.5);
   z-index: 10;
 }
 
@@ -388,7 +388,7 @@
 }
 
 .mejs-time-handle-content {
-  border: 4px solid hsla(0deg, 0%, 100%, 0.9);
+  border: 4px solid hsla(0, 0%, 100%, 0.9);
   border-radius: 50%;
   height: 10px;
   left: -7px;
@@ -506,7 +506,7 @@
 }
 
 .mejs-volume-total {
-  background: hsla(0deg, 0%, 100%, 0.5);
+  background: hsla(0, 0%, 100%, 0.5);
   height: 100px;
   left: 50%;
   margin: 0;
@@ -526,7 +526,7 @@
 
 .mejs-volume-current,
 .mejs-volume-handle {
-  background: hsla(0deg, 0%, 100%, 0.9);
+  background: hsla(0, 0%, 100%, 0.9);
   position: absolute;
 }
 
@@ -567,7 +567,7 @@
 }
 
 .mejs-horizontal-volume-current {
-  background: hsla(0deg, 0%, 100%, 0.8);
+  background: hsla(0, 0%, 100%, 0.8);
   height: 100%;
   top: 0;
   width: 100%;
@@ -632,7 +632,7 @@
 .mejs-captions-selector-list-item:hover,
 .mejs-chapters-selector-list-item:hover {
   background-color: #c8c8c8 !important;
-  background-color: hsla(0deg, 0%, 100%, 0.4) !important;
+  background-color: hsla(0, 0%, 100%, 0.4) !important;
 }
 
 .mejs-captions-selector-input,
@@ -697,8 +697,8 @@
 
 .mejs-captions-text,
 .mejs-captions-text * {
-  background: hsla(0deg, 0%, 8%, 0.5);
-  box-shadow: 5px 0 0 hsla(0deg, 0%, 8%, 0.5), -5px 0 0 hsla(0deg, 0%, 8%, 0.5);
+  background: hsla(0, 0%, 8%, 0.5);
+  box-shadow: 5px 0 0 hsla(0, 0%, 8%, 0.5), -5px 0 0 hsla(0, 0%, 8%, 0.5);
   padding: 0;
   white-space: pre-wrap;
 }
@@ -889,7 +889,11 @@ div .mejs-time-total {
   border-right: 1px solid #bbb !important;
   border-top: none;
   border-bottom: none;
+  border-bottom: none;
   min-height: 110px;
+}
+.sh-player-player-container--collapsable .wp-playlist-tracks {
+  border-bottom: none !important;
 }
 .sh-player-player-container audio, .sh-player-player-container .mejs-mediaelement, .sh-player-player-container .mejs-volume-button, .sh-player-player-container .mejs-horizontal-volume-slider {
   display: none !important;
@@ -928,6 +932,7 @@ div .mejs-time-total {
   padding: 0 15px;
   max-height: 80px;
   min-height: 80px;
+  border-bottom: 1px solid #bbb;
   overflow: hidden;
   transition: max-height 0.35s ease;
 }
@@ -939,6 +944,9 @@ div .mejs-time-total {
   height: 40px;
   line-height: 25px;
   font-size: 16px;
+}
+.sh-player-player-container .wp-playlist-tracks .wp-playlist-item:last-child {
+  border-bottom-color: transparent;
 }
 .sh-player-player-container .wp-playlist-tracks .wp-playlist-item .wp-playlist-caption {
   white-space: nowrap;
@@ -984,7 +992,7 @@ div .mejs-time-total {
   top: -1px;
 }
 .sh-player__view-more:hover {
-  background: #08adff;
+  background: rgb(7.5, 172.5, 255);
 }
 .sh-player__buttons {
   white-space: nowrap;
